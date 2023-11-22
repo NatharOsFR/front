@@ -1,0 +1,914 @@
+
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15%;
+  width: 100%;
+  background: linear-gradient(to bottom, rgba(233,246,246,1) 50%, rgba(233,246,246,0) 100%);
+  white-space: nowrap;
+}
+
+body {
+  margin-top: 8%;
+}
+
+
+.rounded-button {
+    background: 
+      linear-gradient(to bottom, rgba(233,246,246,0.9) 0%, rgba(233,246,246,0) 100%),
+      #06B5EC; 
+   /* Couleur de fond du bouton */
+  color: #fff; /* Couleur du texte du bouton */
+  border: none;
+  border-radius: 20px; /* Arrondi des coins du bouton */
+  padding: 20px 60px; /* Espacement interne du bouton */
+  cursor: pointer;
+}
+
+.rounded-button a {
+  color: white;
+}
+
+.rounded-button {
+  transition: transform 0.3s;
+}
+
+.rounded-button:hover {
+   transform: scale(1.05);
+}
+
+.header-buttons {
+  display: flex;
+  gap: 10%; /* Espacement entre les boutons */
+  margin-right: 5%;
+}
+
+.logo img, .burger-icon span {
+   transition: transform 0.3s
+}
+
+.logo:hover img, .burger-icon:hover span {
+  transform: scale(1.1);
+}
+
+
+/* Card des Posts */
+.postProfil {
+    gap: 150px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.postAccueil {
+    gap: 20px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+ .card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      width: 55%;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      background-image: linear-gradient(to bottom, rgba(233,246,246,0.9) 0%, rgba(233,246,246,0) 100%);
+       margin-bottom: 20px;
+  }
+
+
+
+.left-side {
+    width: 60%;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+.right-side {
+    width: 40%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+  .card img {
+      width: 50%;
+      height: auto;
+  }
+
+  .card .img-chat {
+    width: 100%;
+    height: 45%;
+  }
+
+  .card .img-like {
+    width: 100%;
+    height: 40%;
+  }
+
+
+  .card .img-partage {
+    width: 100%;
+    height: 50%;
+  }
+
+.user {
+    display: flex;
+    align-items: center; /* Alignement vertical au centre */
+}
+
+  .card .imgMain {
+    width: 75%;
+  }
+  .card .titre{
+    font-size:100%;
+    display: flex;
+    text-align: left;
+    align-items: center;
+  }
+  .card .imgHumain {
+    width: 15%;
+    border-radius: 50%; /* Transforme l'image en cercle */
+    overflow: hidden;
+    margin-right: 5%;
+  }
+  .card .titreInfoPost{
+    display: flex;
+    align-items: center;
+  }
+
+  .card .containerPostPrix {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+
+  .card .imgHumainMain {
+    width: 10%;
+    margin-right: 2%;
+  }
+  .card .textPrixPost{
+    font-weight: bold;
+    font-size: 150%;
+  }
+  .card .imgBuy {
+    width: 20%;
+    margin-left: 10px;
+  }
+  .card .description{
+    text-align:left;
+    margin-top: 5%;
+  }
+
+  .card .actionButtons {
+    width: 50%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    margin-top: 5%;
+  }
+  .card .imgPostMoney{
+    width: 15%;
+    height: 15%;
+  }
+  .owner-info {
+    background-color: #A50000;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+
+  .card {
+      transition: transform 0.3s; /* Ajoutez une transition pour l'effet en douceur */
+  }
+
+  .card:hover {
+      transform: scale(1.025); /* Agrandir la carte de 10% */
+  }
+
+.card .Infos {
+  display: flex;
+  flex-direction: row;
+}
+
+                          /* Burger */
+/* Sidenav menu */
+.sidenav {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: -250px;
+  background-color: #e8e8e8;
+  padding-top: 60px;
+  transition: left 0.5s ease;
+}
+
+/* Sidenav menu links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+   transition: color 0.3s, background-color 0.3s;
+}
+
+.navHover a:hover {
+  color: #111;
+  background-color: #ddd;
+}
+
+.sidenav a:hover {
+  color: #111;
+}
+
+.sidenav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Active class */
+.sidenav.active {
+  left: 0;
+}
+
+/* Close btn */
+.sidenav .close {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  cursor: pointer;
+}
+
+/* Icône burger */
+.burger-icon span {
+  display: block;
+  width: 35px;
+  height: 5px;
+  margin-left:10%;
+  background-color: black;
+  margin: 6px 0;
+}
+
+.burger-icon:hover{
+  cursor: pointer;
+}
+#openBtn{
+  margin-left: 1%;
+  margin-right: 2%;
+}
+
+#searchbar{
+  margin-left: 1%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  width: 90%;
+  height: 5%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+}
+                         /* Page Accueil */
+
+/* Styles pour le bouton en bas à droite */
+.fixed-button {
+    position: fixed;
+    bottom: 3%; 
+    right: 3%; 
+    background-color: #06b5ec;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.fixed-button:hover {
+   transform: scale(1.05);
+}
+
+.fixed-button a {
+  color: white;
+}
+
+.fixed-button a:hover {
+  color: white;
+}
+
+.fixed-button:hover {
+  background-color: #45a3bf
+}
+
+
+                        /* Page Boutique */
+
+.container-boutique {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.grande-case {
+    width: 50%;
+    border: 2px solid #333;
+    margin-top: 3%;
+    background-color: rgba(233, 246, 246, 0.2);
+}
+.ligneBoutique {
+    display: flex;
+    flex-wrap: wrap;
+}
+.caseBoutique {
+    flex: 1;
+    margin: 5%;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background-color: #A50000;
+    transition: transform 0.3s;
+}
+
+
+.caseBoutique:hover {
+   transform: scale(1.05);
+}
+
+.caseBoutique span {
+  display: flex;
+  align-items: center;
+  color: #D3D3D3;
+}
+
+.caseBoutique span img {
+  margin-left: auto; /* Push the image to the right */
+}
+
+.caseBInterne {
+   color: #D3D3D3;
+   font-weight: bold;
+}
+
+.caseBInterne {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background-color: #CC3737;
+}
+
+.imgPostMoneyBoutique{
+  width: 80%;
+  height: auto;
+}
+
+.titreBoutique{
+  font-size: 2em;
+  margin-top: 3%;
+  text-align:center;
+}
+
+.MatriceCoin {
+  width: 17%;
+}
+
+                                /* Page Connexion / Inscription  */
+
+/* Styles pour le formulaire */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    flex-direction: column;
+}
+
+.form {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.form label,
+.form input {
+    display: block;
+    margin: 10px 0;
+}
+
+
+.form-button {
+    margin: 10px 0;
+}
+
+.TitreConnexion h3 {
+  margin-bottom: 20%;
+  text-align: center;
+}
+
+.TitreInscription h3 {
+  margin-bottom: 8%;
+  text-align: center;
+}
+
+#formInscription {
+  display: none;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.InscriptionBloc {
+  display: flex;
+  flex-direction: row;
+}
+.InscriptionGauche {
+  margin-right: 15%;
+}
+
+.InscriptionGauche h3,
+.InscriptionDroite button {
+    width: 100%; /* Make sure these elements span the full width of their containers */
+}
+
+.InscriptionGauche label,
+.InscriptionDroite label,
+.InscriptionGauche input,
+.InscriptionDroite input {
+    width: 100%; /* Make sure labels and inputs span the full width of their containers */
+    margin-bottom: 10px;
+}
+
+.boutonsConnexionInscription {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 3%;
+  gap: 5%;
+}
+
+.boutonInscription:hover, .boutonConnexion:hover, .toggle-button.disabled:hover {
+    background-color: #45a3bf; /* Nouvelle couleur de fond au survol */
+}
+
+.boutonInscription, .boutonConnexion  {
+  background-color: #06b5ec;
+  color: white;
+  border: none;
+  border-radius: 20px; 
+  padding: 8px 50px; 
+  cursor: pointer;
+}
+
+
+.bouton {
+  margin-top: 15%;
+}
+.boutonInscription a, .boutonConnexion a {
+  color: white;
+}
+.sous-container {
+  margin: 5%;
+  border-radius: 50px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 70px;
+  background-image: linear-gradient(to bottom, #C7E6F0 0%, #ffffff 50%, #C7E6F0 100%);
+}
+
+/* Styles pour le bouton désactivé */
+.toggle-button.disabled {
+  opacity: 1;  
+  background-color: #06B5EC;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 15px 50px;
+  cursor: pointer;
+  margin-bottom: 5%;
+}
+
+/* Styles pour le bouton actif */
+.toggle-button:active,
+.toggle-button.active {
+  opacity: 0.2;  
+  cursor: not-allowed !important;
+  background-color: #808080;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 15px 50px;
+  margin-bottom: 5%;
+}
+
+.progress {
+    width: 100%;
+    height: 20px;
+    background-color: #ddd;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0;
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+.input-error {
+    border: 1px solid red;
+}
+
+
+
+
+
+                    /* Page Creation Post */
+
+/* Styles pour le formulaire */
+.post-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.post-form {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 15px;
+    width: 50%;
+    background-image: linear-gradient(to bottom, #C7E6F0 0%, #ffffff 50%, #C7E6F0 100%);
+}
+
+.post-form label, .post-form input, .post-form textarea {
+    display: block;
+    margin: 10px 0;
+}
+
+.post-toggle-label {
+    display: flex;
+    align-items: center;
+}
+
+
+/* Nouvelles règles CSS pour aligner l'image et le fichier à gauche */
+.left-section {
+  flex:2;
+  margin: 0 auto;
+}
+
+/* Ajoutez un peu d'espace entre les éléments de gauche et de droite */
+.right-section {
+  width: 50%; /* Vous pouvez ajuster la largeur selon vos besoins */
+  margin: 0 auto; /* Centre horizontalement */
+}
+#description{
+  width: 100%;
+  border-radius:10px;
+  resize: none;
+}
+
+
+/* Réglez la largeur de l'image à 100% pour qu'elle s'adapte à la partie gauche */
+#image-preview {
+  max-width: 40%;
+  width: 40%;
+}
+
+/* Ajoutez un peu d'espace en bas de l'image pour séparer les sections */
+#image-preview {
+   margin: 15% }
+
+.custom-file-input {
+    position: absolute;
+    left: -9999px; /* Positionne l'élément en dehors de la zone visible */
+}
+
+.custom-file-label {
+    background-color: #06B5EC; /* Couleur de fond du bouton */
+    color: #fff; /* Couleur du texte du bouton */
+    padding: 10px 20px; /* Rembourrage du bouton */
+    cursor: pointer; /* Curseur en main pointer pour indiquer que c'est cliquable */
+    border-radius: 15px;
+    width: 60%;
+    
+}
+
+.custom-file-label:hover {
+    background-color: #45a3bf; /* Couleur de fond au survol */
+}
+
+
+.creationPost {
+  display: flex;
+  flex-direction: row;
+}
+
+.tags-input {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #ccc;
+  padding: 5px;
+  align-items: center;
+}
+
+.tags-input .tag {
+  display: inline-block; /* Pour afficher les tags horizontalement */
+  background-color: #06B5EC;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.tags-input .tag:hover {
+  background-color: #0056b3;
+}
+
+
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+
+
+.post-form-button{
+   background-color: #06B5EC;
+  color: #fff; /* Texte blanc */
+  padding: 10px 20px; /* Rembourrage */
+  border: none; /* Supprimer la bordure */
+  border-radius: 5px; /* Coins arrondis */
+  cursor: pointer; /* Curseur en main pointer pour indiquer que c'est cliquable */
+  transition: background-color 0.2s; /* Transition de couleur de fond au survol */
+
+}
+.post-form-button:hover{
+  background-color:  #45a3bf; /* Couleur de fond au survol */
+}
+
+.plus {
+  width: 15%;
+}
+
+                            /* Page Suivie */
+
+
+/* Styles pour la liste des abonnés */
+
+.followers-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.follower {
+    margin: 3%;
+    font-size: 18px;
+}
+
+.imgHumain {
+  width: 5%;
+  border-radius: 50%; /* Transforme l'image en cercle */
+  overflow: hidden;
+  margin-right: 5%;
+}
+
+.followers-container{
+  background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 15px;
+      width: 60%;
+      height: 60%;
+      background-image: linear-gradient(to bottom, #C7E6F0 0%, #ffffff 50%, #C7E6F0 100%);
+   text-align: center;
+  }
+
+.followers-titre{
+  margin-top: 5%; 
+  margin-bottom: 5%;
+}
+
+
+.container-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+
+
+                                /* Page Profile */
+
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 4%;
+    width: 80%;
+    border-radius: 50px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-image: linear-gradient(to bottom, #C7E6F0 0%, #ffffff 50%, #C7E6F0 100%);
+}
+
+.profile-block {
+    display: flex;
+    align-items: center;
+}
+
+.profile-image {
+    width: 20%;
+    border-radius: 50%;
+    margin: 4%;
+}
+
+.profile-info {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-info h2 {
+    margin: 0;
+    font-size: 24px;
+   margin-bottom: 30px;
+}
+
+.profile-info {
+    margin: 0;
+    font-size: 18px;
+    margin-bottom: 40px;
+}
+
+.bio p {
+    margin: 0;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.profile-stats p {
+    font-size: 18px;
+}
+
+.edit-profile-button {
+    margin-top: 20px;
+    background-color: #06B5EC;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    width: 30%;
+    margin-top: 10%;
+}
+
+.edit-profile-button:hover {
+  background-color:#45a3bf
+}
+
+.profil-left {
+  width: 50%;
+  margin-left: 3%;
+}
+
+.profil-right {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10%;
+  gap: 20px;
+}
+
+
+.ImgCoins {
+  width: 8%;
+}
+
+.profile-info input {
+    margin-bottom: 20px; 
+}
+
+
+.bio textarea {
+    height: 100px; 
+    width: 100%; 
+}
+
+.profile-info .age-input {
+  width: 15%; 
+}
+
+
+                                    /* Page MentionLegales */
+
+
+.mentionLegales {
+  text-align: center;
+  width:50%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  margin: 7%;
+}
+
+.TitreMentionLegales {
+  margin-bottom: 7%;
+}
+
+
+                                   /* Page Compte */
+
+.compte-container {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 100vh;
+}
+
+.compte {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 4%;
+  width: 80%;
+  height: 50%;
+  border-radius: 50px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  background-image: linear-gradient(to bottom, #C7E6F0 0%, #ffffff 50%, #C7E6F0 100%);
+}
