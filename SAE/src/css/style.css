@@ -13,7 +13,6 @@ body {
   margin-top: 8%;
 }
 
-
 .rounded-button {
     background: 
       linear-gradient(to bottom, rgba(233,246,246,0.9) 0%, rgba(233,246,246,0) 100%),
@@ -40,8 +39,8 @@ body {
 
 .header-buttons {
   display: flex;
-  gap: 10%; /* Espacement entre les boutons */
-  margin-right: 5%;
+  gap: 7%;
+  margin-right: 10%;
 }
 
 .logo img, .burger-icon span {
@@ -52,14 +51,66 @@ body {
   transform: scale(1.1);
 }
 
+.user-image {
+  width: 10%; 
+  height: auto; 
+  border-radius: 50%;
+}
 
-/* Card des Posts */
-.postProfil {
-    gap: 150px;
-    margin: 0 auto;
+.search-result-item {
     display: flex;
     align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* Ajoute une bordure entre les résultats */
 }
+
+.user-image {
+    width: 50px; /* Ajustez la taille de l'image selon vos besoins */
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px; /* Ajoute de l'espace entre l'image et le texte */
+}
+
+.content-container {
+    flex-grow: 1; /* Permet au contenu de prendre l'espace restant */
+}
+
+/* Style pour le bouton "Voir plus" */
+.button-see-more {
+    width: 100%; /* Occupe toute la largeur disponible */
+    padding: 10px 20px; /* Espacement intérieur */
+    border: none; /* Supprime la bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointeur au survol */
+    transition: background-color 0.3s; /* Animation de transition */
+}
+
+/* Changement de couleur de fond au survol */
+.button-see-more:hover {
+    background-color: #ddd;
+}
+
+
+
+
+
+
+.postProfil {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.postProfil > div {
+  width: 48%; /* 48% pour compenser les marges et éviter un débordement */
+  box-sizing: border-box;
+  margin-bottom: 20px; /* Espace entre les éléments */
+}
+
+
+
 
 .postAccueil {
     gap: 20px;
@@ -70,7 +121,7 @@ body {
 }
 
 
- .card {
+ .cardCSS {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -150,6 +201,14 @@ body {
     align-items: center;
     justify-content: flex-end;
 }
+#cardContainer .containersolo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw; /* Utilisez 'vw' pour la largeur de la fenêtre */
+    height: 100vh; /* Utilisez 'vh' pour la hauteur de la fenêtre */
+}
+
 
 
   .card .imgHumainMain {
@@ -161,7 +220,7 @@ body {
     font-size: 150%;
   }
   .card .imgBuy {
-    width: 20%;
+    width: 25%;
     margin-left: 10px;
   }
   .card .description{
@@ -187,14 +246,6 @@ body {
     border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     text-align: center;
-  }
-
-  .card {
-      transition: transform 0.3s; /* Ajoutez une transition pour l'effet en douceur */
-  }
-
-  .card:hover {
-      transform: scale(1.025); /* Agrandir la carte de 10% */
   }
 
 .card .Infos {
@@ -551,10 +602,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     height: 80vh;
 }
 
 .post-form {
+    margin: 2%;
     background-color: #fff;
     border: 1px solid #ddd;
     padding: 20px;
@@ -721,14 +774,14 @@ input:checked + .slider:before {
 
 /* Styles pour la liste des abonnés */
 
-.followers-list {
+.followers-list, .followed-list {
     list-style-type: none;
     padding: 0;
 }
 
-.follower {
+.follower, .followed {
     margin: 3%;
-    font-size: 18px;
+    font-size: 25px;
 }
 
 .imgHumain {
@@ -738,7 +791,7 @@ input:checked + .slider:before {
   margin-right: 5%;
 }
 
-.followers-container{
+.followers-container, .followed-container {
   background-color: #fff;
       border: 1px solid #ddd;
       padding: 20px;
@@ -749,9 +802,8 @@ input:checked + .slider:before {
    text-align: center;
   }
 
-.followers-titre{
-  margin-top: 5%; 
-  margin-bottom: 5%;
+.followers-titre, .followed-titre {
+  margin-bottom: 3%;
 }
 
 
@@ -759,19 +811,37 @@ input:checked + .slider:before {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  flex-direction: column;
+  height: 70vh;
 }
 
+.no-contact-message {
+    font-size: 20px; 
+    font-weight: bold; 
+    margin-top: 2%;
+}
 
+.imgAbonnements, .imgAbonnes {
+  width: 7%;
+  border-radius: 50%; /* Transforme l'image en cercle */
+  overflow: hidden;
+  margin-right: 3%;
+}
 
+.followers-list a, .followed-list a {
+    text-decoration: none; 
+    color: inherit; 
+    cursor: pointer;
+}
+
+.followers-list a:hover, .followed-list a:hover {
+    background-color: #f0f0f0; 
+}
 
                                 /* Page Profile */
 
 
 .profile-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
     margin: 4%;
     width: 80%;
     border-radius: 50px;
@@ -841,6 +911,23 @@ input:checked + .slider:before {
   background-color:#45a3bf
 }
 
+.subscribe-button {
+    margin-top: 20px;
+    background-color: #06B5EC;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    width: 50%;
+    margin-top: 10%;
+}
+
+.subscribe-button:hover {
+  background-color:#45a3bf
+}
+
+
 .profil-left {
   width: 50%;
   margin-left: 3%;
@@ -853,6 +940,14 @@ input:checked + .slider:before {
   gap: 20px;
 }
 
+.Monney {
+  display: flex;
+  align-items: center; /* Vertical center alignment */
+}
+
+.Coins {
+  margin-right: 10px; /* Adjust the margin as needed */
+}
 
 .ImgCoins {
   width: 8%;
@@ -892,23 +987,113 @@ input:checked + .slider:before {
 
                                    /* Page Compte */
 
-.compte-container {
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     height: 100vh;
-}
 
-.compte {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  margin: 4%;
-  width: 80%;
-  height: 50%;
+.compte-container {
+  margin: 2%;
+  width: 50%;
   border-radius: 50px;
   background-color: #fff;
   border: 1px solid #ddd;
   padding: 20px;
   background-image: linear-gradient(to bottom, #C7E6F0 0%, #ffffff 50%, #C7E6F0 100%);
+}
+
+.compte-block {
+    display: flex;
+    align-items: center;
+   justify-content: space-evenly;
+}
+
+.compte-info {
+    display: flex;
+    align-items: center;
+}
+
+.compte-left {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin-left: 3%;
+  gap: 20px;
+}
+
+.compte-right {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20%;
+  gap: 15px;
+}
+.compte-image {
+    width: 25%;
+    border-radius: 50%;
+}
+
+.edit-motdepasse-button {
+    background-color: #06B5EC;
+    color: white;
+    padding: 5px 0px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-top: 10%;
+}
+
+.edit-motdepasse-button:hover {
+  background-color:#45a3bf
+}
+
+                                  /* Chargement */
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1;
+}
+
+.loader-inner {
+  width: 80px;
+  height: 80px;
+  animation: spin 1s linear infinite;
+  border: 4px solid #c1e9ff;
+  border-top-color: #9ad4ff;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.fade-in-transition {
+  animation: fade-out 1s ease-out forwards;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+                               /* Post Unique */
+
+.PostMessage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  width: 30%;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  background-image: linear-gradient(to bottom, rgba(233,246,246,0.9) 0%, rgba(233,246,246,0) 100%);
+   margin-bottom: 20px;
+}
+
+.solocontainer {
+    display: flex;
+    justify-content: center;
 }

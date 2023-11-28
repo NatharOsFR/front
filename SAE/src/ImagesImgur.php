@@ -3,8 +3,7 @@ require '../vendor/autoload.php';
 
 $client_id = 'f63500e82ce560c';
 
-
-if ($_FILES['image']['error'] == UPLOAD_ERR_OK) {
+if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
     $image = $_FILES['image']['tmp_name'];
 
     $client = new \GuzzleHttp\Client();
@@ -22,14 +21,13 @@ if ($_FILES['image']['error'] == UPLOAD_ERR_OK) {
 
     $result = json_decode($response->getBody(), true);
 
-    if ($response->getStatusCode() == 200) {
+    if ($response->getStatusCode() == 200 && isset($result['data']['link'])) {
         $imgurLink = $result['data']['link'];
-        echo 'Lien Imgur: ' . $imgurLink;
+        echo $imgurLink;
     } else {
         echo 'Erreur lors du téléchargement sur Imgur.';
     }
 } else {
-    echo 'Veuillez sélectionner une image.';
+    echo 'Aucun fichier image n\'a été téléchargé.';
 }
-
 ?>

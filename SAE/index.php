@@ -5,7 +5,8 @@ require_once('src/controllers/c-boutique.php');
 require_once('src/controllers/c-creationPost.php');
 require_once('src/controllers/c-post.php');
 require_once('src/controllers/c-profil.php');
-require_once('src/controllers/c-suivies.php');
+require_once('src/controllers/c-abonnements.php');
+require_once('src/controllers/c-abonnes.php');
 require_once('src/controllers/c-mention_legales.php');
 require_once('src/controllers/c-compte.php');
 
@@ -20,41 +21,63 @@ $urlSegments = array_filter($urlSegments);
 // Récupérer le dernier segment (qui devrait être la page demandée)
 $page = end($urlSegments);
 
- if(isset($_GET['url']) && $_GET['url']){
-  $url = rtrim($_GET['url'], '/');
- 
-  switch ($url){
-    case "connexion":
-      connexion();
-      break;
-    case "profil":
-      profil();
-      break;
-    case "mentionLegales":
-      mentionLegales();
-      break;
-    case "post":
-      post();
-      break;
-    case "profil":
-      profil();
-      break;
-    case "suivies":
-      suivies();
-      break;
-    case "creationPost":
-      creationPost();
-      break;
-    case "boutique":
-      boutique();
-      break;
-    case "compte":
-      compte();
-      break;
-    default:
-      accueil();
-  } 
- }
- else {
-   accueil();
-} 
+// Vérifier si l'URL est de la forme "user/nickname"
+  if (isset($urlSegments[1]) && $urlSegments[1] === 'user' && isset($urlSegments[2])) {
+
+    // Récupérer le nickname
+    $nickname = $urlSegments[2];
+
+    // Appeler la fonction avec le nickname
+    profiluser($nickname);
+  }
+    else if (isset($urlSegments[1]) && $urlSegments[1] === 'post' && isset($urlSegments[2])) {
+
+    // Récupérer le nickname
+    $postonly = $urlSegments[2];
+
+    // Appeler la fonction avec le nickname
+    postonly($postonly);
+} else {
+    // Traiter les autres cas
+    if(isset($_GET['url']) && $_GET['url']){
+        $url = rtrim($_GET['url'], '/');
+
+        switch ($url){
+            case "connexion":
+                connexion();
+                break;
+            case "profil":
+                profil();
+                break;
+            case "mentionLegales":
+                mentionLegales();
+                break;
+            case "post":
+                post();
+                break;
+            case "profil":
+                profil();
+                break;
+            case "abonnements":
+                abonnements();
+                break;
+             case "abonnes":
+                abonnes();
+                break;
+            case "creationPost":
+                creationPost();
+                break;
+            case "boutique":
+                boutique();
+                break;
+            case "compte":
+                compte();
+                break;
+            default:
+                accueil();
+        } 
+    } else {
+        accueil();
+    }
+}
+?>

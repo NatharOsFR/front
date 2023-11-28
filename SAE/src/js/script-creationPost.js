@@ -1,6 +1,94 @@
 const toggleSwitch = document.getElementById("toggle");
 const toggleLabel = document.querySelector(".post-toggle-label span");
 
+
+
+  document.getElementById('postForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Empêche la soumission normale du formulaire
+
+    // Récupérer les données du formulaire
+    const description = document.getElementById('description').value;
+    const formData = new FormData(event.target);
+    const tags = Array.from(tagsContainer.querySelectorAll('.tag')).map(tag => tag.textContent);
+    const buy = document.getElementById('toggle').checked;
+
+
+    // Appeler la fonction createPost avec les données et l'objet event
+    createPost(description, formData,tags,buy);
+  });
+
+  async function createPost(description, formData, tags,buy) {
+    ChargementCreationPost();
+    try {
+        console.log('Valeur de la description dans createPost:', description);
+
+        // Envoyer la requête avec les données du formulaire
+        const response = await fetch('src/ImagesImgur.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`La requête a échoué avec le statut ${response.status}`);
+        }
+
+        // Récupérer le lien Imgur
+        const imgurLink = await response.text();
+
+        console.log('Imgur Link:', imgurLink);
+
+        // Appeler la fonction create avec les données nécessaires
+        create(description, imgurLink,tags,buy);
+    } catch (error) {
+        console.error('Erreur lors de la récupération du lien Imgur', error);
+    }
+  }
+
+  function create(description, imgurLink,tags,buy) {
+    // Utiliser description et imgurLink pour créer les données nécessaires
+    
+
+    const data = {
+        motherId: null,
+        picture: imgurLink,
+        description,
+        tags, 
+        buy,
+        token,
+    };
+
+    console.log(data);
+
+    // Émission de l'événement 'createPost' vers le serveur
+    socket.emit('createPost', data);
+
+    // Écoute de l'événement 'reponsecreatePost' une seule fois
+    socket.once('reponsecreatePost', (response) => {
+        console.log('Réponse du serveur (createPost):', response);
+
+        // Vérification du code de retour
+        if (response.statusCode === 200) {
+            console.log('Le post a été créé avec succès.');
+
+            // Afficher un message de succès à l'utilisateur
+            alert('Post créé avec succès !');
+            // Rediriger l'utilisateur ou effectuer d'autres actions après la création réussie du post
+            window.location.href = "https://mortifiedenchantingmenu.ni0de0.repl.co";
+        } else if (response.statusCode === 400) {
+            console.error('La création du post a échoué. Erreur côté client:', response.message);
+            // Afficher un message d'erreur à l'utilisateur
+            alert('Erreur lors de la création du post. Veuillez vérifier vos informations.');
+        } else {
+            console.warn('Code de statut inattendu:', response.statusCode);
+            // Afficher un message d'erreur générique à l'utilisateur
+            alert('Erreur inattendue lors de la création du post. Veuillez réessayer.');
+        }
+    });
+}
+
+
+
+
 toggleSwitch.addEventListener("change", () => {
   if (toggleSwitch.checked) {
     toggleLabel.textContent = "Achetable";

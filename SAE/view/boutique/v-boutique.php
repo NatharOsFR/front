@@ -1,4 +1,10 @@
 <body>
+  <div id="loader" class="loader">
+      <div class="loader-inner"></div>
+  </div>
+  <script src="/src/js/chargement.js" defer></script>
+  <script src="/src/js/redirection.js" defer></script>
+  
   <h3 class="titreBoutique">Boutique MatriceCoins</h3>
   <div class="container-boutique">
     <div class="grande-case">

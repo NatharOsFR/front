@@ -1,12 +1,19 @@
 <body>
+  <div id="loader" class="loader">
+      <div class="loader-inner"></div>
+  </div>
+  <script src="/src/js/chargement.js" defer></script>
+  <script src="/src/js/redirection.js" defer></script>
+  
   <div class="post-form-container">
+    <h3 class="titrePost">Création de Post</h3>
     <div class="post-form">
-      <form action="src/ImagesImgur.php" method="post" enctype="multipart/form-data">
+      <form id="postForm" method="post" enctype="multipart/form-data">
         <div class="creationPost">
         <div class="left-section">
           <label for="image" class="custom-file-label">Sélectionnez un fichier</label>
           <input type="file" id="image" name="image" accept="image/*" onchange="previewImage(this)" class="custom-file-input">
-
+            
           <img id="image-preview" src="#" alt="Image prévisualisée" style="max-width: 100%; display: none;">
         </div>
         <div class="right-section">
@@ -25,7 +32,6 @@
           <label class="post-toggle-label">
             <span>Non-achetable</span>
           </label>
-
           <button class="post-form-button" type="submit">Publier</button>
         </div>
         </div>

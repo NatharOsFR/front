@@ -14,6 +14,57 @@ function redirectionApresSoumission() {
     // Assurez-vous de retourner false pour empêcher l'envoi du formulaire par défaut
 }
 
+// Fonction pour gérer la connexion de l'utilisateur
+async function connexion(event) {
+  event.preventDefault();
+
+  const mail = document.getElementById('emailConnexion').value;
+  const password = document.getElementById('motDePasseConnexion').value;
+
+  const data = {
+    mail,
+    password,
+  };
+
+  // Émission de l'événement 'connexion' vers le serveur
+  socket.emit('connexion', data);
+
+  // Écoute de l'événement 'reponseconnexion' une seule fois
+  socket.once('reponseconnexion', (response) => {
+    console.log('Réponse du serveur (connexion):', response);
+
+    // Vérification du code de retour
+    if (response.statusCode === 200) {
+      console.log('La connexion a été traitée avec succès.');
+      // Sauvegarder le token dans les cookies
+      document.cookie = `token=${response.response.token}; expires=Wed, 1 Jan 2070 00:00:00 UTC; path=/`;
+
+      // Afficher un message de succès à l'utilisateur
+      alert('Connexion réussie !');
+      redirectionApresSoumission()
+      // Renvoyer true pour permettre la soumission du formulaire
+      return true;
+    } else if (response.statusCode === 400) {
+      console.error('La connexion a échoué. Erreur côté client:', response.message);
+      // Afficher un message d'erreur à l'utilisateur
+      alert('Erreur lors de la connexion. Veuillez vérifier vos informations.');
+
+      // Renvoyer false pour empêcher la soumission du formulaire
+      return false;
+    } else {
+      console.warn('Code de statut inattendu:', response.statusCode);
+      // Afficher un message d'erreur générique à l'utilisateur
+      alert('Erreur inattendue lors de la connexion. Veuillez réessayer.');
+
+      // Renvoyer false pour empêcher la soumission du formulaire
+      return false;
+    }
+  });
+}
+
+
+
+
 async function creationUser(event) {
     event.preventDefault();
 
@@ -23,6 +74,7 @@ async function creationUser(event) {
     const lastname = document.getElementById('nom').value;
     const firstname = document.getElementById('prenom').value;
     const birthday = document.getElementById('dateNaissance').value;
+  
 
     const data = {
         nickname,
@@ -30,32 +82,36 @@ async function creationUser(event) {
         password,
         lastname,
         firstname,
-        birthday
+        birthday,
+        picture : "https://i.imgur.com/giD9E4i.png"
     };
   socket.emit('creationUser', data);
+
+  // Écoute de l'événement 'reponsecreationUser' uniquement dans le contexte de cette fonction
+  socket.once('reponsecreationUser', (response) => {
+    console.log('Réponse du serveur:', response);
+
+    // Vérification du code de retour
+    if (response.statusCode === 200) {
+      console.log('La requête a été traitée avec succès.');
+      window.location.href = "https://mortifiedenchantingmenu.ni0de0.repl.co/?url=connexion";
+      // Afficher un message de succès à l'utilisateur
+      alert('Inscription réussie !');
+    } else if (response.statusCode === 400) {
+      console.error('La requête a échoué. Erreur côté client:', response.message);
+      // Afficher un message d'erreur à l'utilisateur
+      alert('Erreur lors de l\'inscription. Veuillez vérifier vos informations.');
+    } else {
+      console.warn('Code de statut inattendu:', response.statusCode);
+      // Afficher un message d'erreur générique à l'utilisateur
+      alert('Le pseudonyme ou l\'adresse e-mail est déjà utilisé par un autre compte. Veuillez choisir un pseudonyme ou une adresse e-mail différent(e).');
+
+    }
+  });
 };
 
-  // Émission de l'événement 'creationUser' vers le serveur
 
-// Écoute de l'événement 'reponseAPI'
-socket.on('reponseAPI', (response) => {
-  console.log('Réponse du serveur:', response);
 
-  // Vérification du code de retour
-  if (response.statusCode === 200) {
-    console.log('La requête a été traitée avec succès.');
-    // Afficher un message de succès à l'utilisateur
-    alert('Inscription réussie !');
-  } else if (response.statusCode === 400) {
-    console.error('La requête a échoué. Erreur côté client:', response.message);
-    // Afficher un message d'erreur à l'utilisateur
-    alert('Erreur lors de l\'inscription. Veuillez vérifier vos informations.');
-  } else {
-    console.warn('Code de statut inattendu:', response.statusCode);
-    // Afficher un message d'erreur générique à l'utilisateur
-    alert('Erreur inattendue lors de l\'inscription. Veuillez réessayer.');
-  }
-});
 
 
 

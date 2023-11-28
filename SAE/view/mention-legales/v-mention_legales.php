@@ -1,4 +1,9 @@
 <body>
+  <div id="loader" class="loader">
+      <div class="loader-inner"></div>
+  </div>
+  <script src="/src/js/chargement.js" defer></script>
+  
   <div class="container-center">
   <div class="mentionLegales">
     
