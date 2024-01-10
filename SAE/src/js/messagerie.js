@@ -118,7 +118,7 @@ async function sendMessage() {
                 socket.emit('privateChatMessage', { message, room: currentRoom, nickname : nickname, picture: picture, userId: Id, privateUsers });
             } else {
                 // Ce n'est pas une messagerie privée, envoyer normalement
-                socket.emit('chatMessage', { message, room: currentRoom, nickname : nickname, userId: Id });
+                socket.emit('chatMessage', { message, room: currentRoom, nickname : nickname,picture: picture , userId: Id });
             }
 
             messageInput.value = '';
@@ -189,14 +189,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Écouter les messages entrants
     socket.on('chatMessage', (data) => {
-        const { message, room, nickname, userId, picture } = data;
+        const { message, room, nickname,picture, userId } = data;
         if (room === currentRoom) {
             addMessage(message, nickname, picture);
         }
     });
 
     socket.on('privateChatMessage', (data) => {
-        const { message, room, nickname, userId, privateUsers, picture } = data;
+        const { message, room, nickname,picture, userId, privateUsers } = data;
         if (currentRoom.includes(userId) &&
             currentRoom.includes(privateUsers[0]) &&
             currentRoom.includes(privateUsers[1]) &&
