@@ -34,7 +34,8 @@ $page = end($urlSegments);
     profiluser($nickname);
   }
     else if (isset($urlSegments[1]) && $urlSegments[1] === 'post' && isset($urlSegments[2])) {
-
+    print(implode(', ', $urlSegments));
+    print('capasse');  
     // Récupérer l'id du post
     $postonly = $urlSegments[2];
 
