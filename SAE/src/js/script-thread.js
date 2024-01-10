@@ -128,7 +128,7 @@ function generateCard(postData,ownerdata,creatorInfo) {
   // Ajoute un gestionnaire d'événements "click" à la carte
   card.addEventListener('click', () => {
     // Redirige vers le lien /post/idpost
-    window.location.href = `/?url=post/${postData._id}`;
+    window.location.href = `/post/${postData._id}`;
   });
 
   return card;

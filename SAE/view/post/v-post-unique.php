@@ -19,5 +19,5 @@
       </div>
   </div>
 
-  <script src="/src/js/post-unique.js" defer></script>
+  <!--<script src="/src/js/post-unique.js" defer></script> -->
 </body>
