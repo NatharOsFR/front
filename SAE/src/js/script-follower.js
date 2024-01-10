@@ -15,7 +15,6 @@ function loadFollowersBatch() {
     getFollowers(displayedFollowersIds, (followersFromSocket) => {
         console.log(followersFromSocket);
       const ulElement = document.querySelector('.followers-list');
-
   if (followersFromSocket && followersFromSocket.length > 0) {
           // Génère et affiche les éléments <li> pour chaque follower
           for (const followerInfo of followersFromSocket) {

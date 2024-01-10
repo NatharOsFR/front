@@ -4,6 +4,8 @@ let messageInput;
 let roomButtons;
 let Id;
 let nickname;
+let picture;
+let loadedFollowers;
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -41,8 +43,7 @@ async function loadDataProfil() {
     // Extraire le nombre total d'utilisateurs suivis
     totalFollowers = profileResponse.response.followersCount;
 
-    // Charger initialement les utilisateurs suivis
-    loadFollowers();
+  
   } catch (error) {
     console.error('Erreur lors de la récupération des données de profil:', error);
     // Gérer les erreurs ici
@@ -75,8 +76,12 @@ async function loadFollowers() {
     });
 
     // Si tous les utilisateurs suivis ont été chargés, masquer le bouton de chargement
+     console.log(totalFollowers);
     if (loadedFollowers >= totalFollowers) {
-      // Ajoutez ici le code pour masquer le bouton de chargement
+      const loadMoreButton = document.getElementById('load-more-button');
+      if (loadMoreButton) {
+          loadMoreButton.style.display = 'none';
+      }
     }
   } catch (error) {
     console.error('Erreur lors du chargement des utilisateurs suivis:', error);
@@ -232,10 +237,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function createPrivateButton(username, roomId) {
+    // Capitaliser la première lettre du nom d'utilisateur
+    const capitalizedUsername = (username && /^[a-zA-Z]/.test(username))
+        ? username.charAt(0).toUpperCase() + username.slice(1)
+        : username;
+
     // Créer un bouton pour la discussion privée avec l'utilisateur
     const privateButton = document.createElement('button');
-    privateButton.textContent = `Discussion avec ${username}`;
+    privateButton.textContent = `${capitalizedUsername}`;
     privateButton.dataset.room = roomId;
+
     // Ajouter le bouton à la liste des boutons
     roomButtons.appendChild(privateButton);
 }

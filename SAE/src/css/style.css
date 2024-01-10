@@ -1203,6 +1203,7 @@ input:checked + .slider:before {
   color: #fff;
   margin-left: 10%;
   margin-top: 3%;
+  overflow: auto;
 }
 
 #room-buttons {

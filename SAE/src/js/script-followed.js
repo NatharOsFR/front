@@ -13,9 +13,8 @@ function getFollowed(usersIdList, callback) {
 
 function loadFollowedBatch() {
     getFollowed(displayedFollowedIds, (followedFromSocket) => {
-        console.log(followedFromSocket);
-        const ulElement = document.querySelector('.followed-list');
-
+      const ulElement = document.querySelector('.followed-list');
+      console.log(followedFromSocket);
         if (followedFromSocket && followedFromSocket.length > 0) {
             // Génère et affiche les éléments <li> pour chaque suiveur
             for (const followedInfo of followedFromSocket) {
@@ -54,10 +53,9 @@ function loadFollowedBatch() {
                 }
             }
         } else {
-            // La liste est vide, affiche un message approprié
             const noContactMessage = document.createElement('li');
             noContactMessage.textContent = 'Aucun abonnements';
-            noContactMessage.classList.add('no-contact-message'); // Ajoute la classe pour le style
+            noContactMessage.classList.add('no-contact-message'); 
             ulElement.appendChild(noContactMessage);
         }
     });
