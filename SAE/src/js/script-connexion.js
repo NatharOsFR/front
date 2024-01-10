@@ -7,10 +7,9 @@ const motDePasseInscription = document.getElementById("motDePasseInscription");
 
 
 
-
 function redirectionApresSoumission() {
     // Effectuez votre redirection ici
-    window.location.href = "https://mortifiedenchantingmenu.ni0de0.repl.co";
+    window.location.href = "/?url=accueil";
     // Assurez-vous de retourner false pour empêcher l'envoi du formulaire par défaut
 }
 

@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Sélectionner le bouton Connexion/Inscription
-    const connexionButton = document.getElementById('connexionButton');
+    const connexionButton = document.getElementById('connexionInscription');
 
     if (token) {
         // Si un token est présent, changer le texte et le lien du bouton

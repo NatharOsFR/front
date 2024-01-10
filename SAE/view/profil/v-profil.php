@@ -9,7 +9,8 @@
       <div class="profile-container">
           <form id="profileForm" enctype="multipart/form-data">
               <div class="profile-block">
-                  <img class="profile-image" id="profile-image" src="includes/humain.png" alt="Image de profil">
+                    <img class="profile-image" id="profile-image" src="includes/humain.png" alt="Image de profil">
+                  
                   <div class="profil-left">
                       <div class="profile-info">
                           <h2 id="profile-username"></h2>

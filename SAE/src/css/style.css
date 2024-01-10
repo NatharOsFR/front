@@ -51,18 +51,18 @@ body {
   transform: scale(1.1);
 }
 
-.user-image {
-  width: 10%; 
-  height: auto; 
-  border-radius: 50%;
-}
-
 .search-result-item {
     display: flex;
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #ddd; /* Ajoute une bordure entre les résultats */
 }
+
+#searchResultsContainer p {
+  display: flex;
+  justify-content: center;
+}
+
 
 .user-image {
     width: 50px; /* Ajustez la taille de l'image selon vos besoins */
@@ -269,14 +269,16 @@ body {
 
 /* Sidenav menu links */
 .sidenav a {
-  padding: 8px 8px 8px 32px;
+  padding: 8px 8px 8px 16px;
   text-decoration: none;
-  font-size: 25px;
   color: #818181;
   display: block;
    transition: color 0.3s, background-color 0.3s;
 }
 
+.navHover {
+  font-size: 25px;
+}
 .navHover a:hover {
   color: #111;
   background-color: #ddd;
@@ -296,6 +298,7 @@ body {
 .sidenav.active {
   left: 0;
 }
+
 
 /* Close btn */
 .sidenav .close {
@@ -380,7 +383,7 @@ body {
 .grande-case {
     width: 50%;
     border: 2px solid #333;
-    margin-top: 3%;
+    margin-top: 1%;
     background-color: rgba(233, 246, 246, 0.2);
 }
 .ligneBoutique {
@@ -442,6 +445,16 @@ body {
   width: 17%;
 }
 
+
+.MonneyBoutique {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ImgCoinsBoutique {
+  width: 3%;
+}
                                 /* Page Connexion / Inscription  */
 
 /* Styles pour le formulaire */
@@ -774,70 +787,82 @@ input:checked + .slider:before {
 
 /* Styles pour la liste des abonnés */
 
-.followers-list, .followed-list {
+.img-profile {
+    border-radius: 50%;
+    overflow: hidden;
+    max-width: 100px;
+    max-height: 100px;
+    margin-right: 10px;
+}
+
+/* Intégration des styles dans les sélecteurs existants */
+.followers-list, .followed-list, .recherche-list {
     list-style-type: none;
     padding: 0;
 }
 
-.follower, .followed {
-    margin: 3%;
+.follower, .followed, .recherche {
     font-size: 25px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.container-list {
+  width:60%
+  
 }
 
 .imgHumain {
-  width: 5%;
-  border-radius: 50%; /* Transforme l'image en cercle */
-  overflow: hidden;
-  margin-right: 5%;
+    width: 5%;
+    border-radius: 50%;
+    margin-right: 5%;
 }
 
-.followers-container, .followed-container {
-  background-color: #fff;
-      border: 1px solid #ddd;
-      padding: 20px;
-      border-radius: 15px;
-      width: 60%;
-      height: 60%;
-      background-image: linear-gradient(to bottom, #C7E6F0 0%, #ffffff 50%, #C7E6F0 100%);
-   text-align: center;
-  }
-
-.followers-titre, .followed-titre {
-  margin-bottom: 3%;
+.followers-container, .followed-container, .recherche-container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 15px;
+    background-image: linear-gradient(to bottom, #C7E6F0 0%, #ffffff 50%, #C7E6F0 100%);
+    text-align: center;
 }
 
+.followers-titre, .followed-titre, .recherche-titre {
+    margin-bottom: 3%;
+}
 
-.container-center{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 70vh;
+.container-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 5%;
 }
 
 .no-contact-message {
-    font-size: 20px; 
-    font-weight: bold; 
+    font-size: 20px;
+    font-weight: bold;
     margin-top: 2%;
 }
 
-.imgAbonnements, .imgAbonnes {
-  width: 7%;
-  border-radius: 50%; /* Transforme l'image en cercle */
+.imgAbonnements, .imgAbonnes, .recherche-image {
+  border-radius: 50%;
   overflow: hidden;
-  margin-right: 3%;
+  width: 60px;
+  height: 60px; 
+  margin-right: 10px;
 }
 
-.followers-list a, .followed-list a {
-    text-decoration: none; 
-    color: inherit; 
+.followers-list a, .followed-list a, .recherche-list a {
+    text-decoration: none;
+    color: inherit;
     cursor: pointer;
 }
 
-.followers-list a:hover, .followed-list a:hover {
-    background-color: #f0f0f0; 
+.followers-list a:hover, .followed-list a:hover, .recherche-list a:hover {
+    background-color: #f0f0f0;
 }
-
                                 /* Page Profile */
 
 
@@ -903,7 +928,7 @@ input:checked + .slider:before {
     border: none;
     border-radius: 15px;
     cursor: pointer;
-    width: 30%;
+    width: 50%;
     margin-top: 10%;
 }
 
@@ -929,7 +954,7 @@ input:checked + .slider:before {
 
 
 .profil-left {
-  width: 50%;
+  width: 80%;
   margin-left: 3%;
 }
 
@@ -942,12 +967,9 @@ input:checked + .slider:before {
 
 .Monney {
   display: flex;
-  align-items: center; /* Vertical center alignment */
+  align-items: center;
 }
 
-.Coins {
-  margin-right: 10px; /* Adjust the margin as needed */
-}
 
 .ImgCoins {
   width: 8%;
@@ -1090,10 +1112,228 @@ input:checked + .slider:before {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   background-image: linear-gradient(to bottom, rgba(233,246,246,0.9) 0%, rgba(233,246,246,0) 100%);
-   margin-bottom: 20px;
+   margin-top: 3%;
 }
 
 .solocontainer {
     display: flex;
     justify-content: center;
+}
+
+
+.comment {
+    margin: 10px;
+    padding: 10px;
+    margin: 6%;
+    display: flex;
+    align-items: center;
+   background: white;
+}
+
+
+.comment span {
+  margin-left: 6px;
+  margin-top: 15px;
+  line-height: 100%;
+  display: flex; 
+}
+
+.img-like {
+  cursor: pointer;
+  margin-top: 3%;
+  width: 100%;
+  height: 15%;
+  
+}
+
+.commentContainer {
+  margin-left: 35%;
+  margin-right: 35%;
+  background-image: linear-gradient(to bottom, rgba(233,246,246,0.9) 0%, rgba(233,246,246,0.9) 100%);
+  border: 1px solid rgba(0,0,0,.125);
+}
+
+.user-container {
+  display:flex;
+  width: 85%;
+}
+
+.user-souscontainer {
+   white-space: nowrap;
+   display:flex;
+}
+
+.comment-bar {
+  margin: 5%;
+  margin-top: 10%;
+  display: flex;
+}
+
+.ContainerLikeText {
+  margin-left: auto; 
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 5%;
+   margin-bottom: 5%;
+  width: 10%;
+}
+
+.CommentButton {
+  background-color: #06B5EC;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-left: 5%;
+}
+
+                              /* Messagerie */
+
+#chat-container {
+  display: flex;
+  height: 85vh;
+}
+
+#sidebar {
+  width: 20%;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #c6dce9;
+  color: #fff;
+  margin-left: 10%;
+  margin-top: 3%;
+}
+
+#room-buttons {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#room-buttons button {
+  display: block;
+  width: 80%;
+  padding: 10px 15px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#room-buttons button:hover {
+  background-color: #2980b9;
+}
+
+#room-buttons button.active {
+  background-color: #66ddcd;
+}
+
+#load-more-button {
+  margin-top: 20px;
+  margin-left: 20%;
+  margin-right: 20%;
+  background-color: #3c7ca1;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#load-more-button:hover {
+  background-color: #67afd9;
+}
+
+#main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  align-items:center;
+}
+
+#messages-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin-bottom: 2%;
+  margin-top: 3%;
+  width: 70%;
+}
+
+#messages-container img {
+  width: 10%;
+}
+
+#input-container {
+  display: flex;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  width: 50%;
+}
+
+#message-input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  outline: none;
+}
+
+#send-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 5%;
+}
+
+#send-button img {
+  height: auto; 
+  display: block; 
+  max-width: 100%; 
+}
+
+
+
+                                /* Post unique */
+
+
+/* Ajoutez ce style à votre fichier CSS */
+.confirmation-dialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-content {
+    text-align: center;
+}
+
+.confirmation-dialog button {
+    margin: 10px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+                              /* VoirPlus */
+.recherche-result-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }

@@ -25,16 +25,25 @@ function loadFollowersBatch() {
                   liElement.className = 'follower';
 
                   // Crée un élément d'ancre (<a>) pour l'ensemble du <li>
-                  const listItemLink = document.createElement('a');
-                  listItemLink.href = `/user/${followerInfo.nickname}`;
+                const listItemLink = document.createElement('a');
+                listItemLink.href = `/user/${followerInfo.nickname}`;
 
-                  const imgHumain = document.createElement('img');
-                  imgHumain.src = followerInfo.picture || 'includes/default-profile-picture.jpg'; // Image par défaut
-                  imgHumain.className = 'imgAbonnes';
+                const imgHumain = document.createElement('img');
+                imgHumain.src = followerInfo.picture || 'includes/default-profile-picture.jpg'; // Image par défaut
+                imgHumain.className = 'imgAbonnes';
 
-                  const usernameSpan = document.createElement('span');
-                  usernameSpan.textContent = followerInfo.nickname;
+                const usernameSpan = document.createElement('span');
 
+                // Vérifiez si le nickname n'est pas vide et s'il commence par une lettre
+                if (followerInfo.nickname && /^[a-zA-Z]/.test(followerInfo.nickname)) {
+                    // Mettez la première lettre en majuscule
+                    const capitalizedNickname = followerInfo.nickname.charAt(0).toUpperCase() + followerInfo.nickname.slice(1);
+                    usernameSpan.textContent = capitalizedNickname;
+                } else {
+                    // Le nickname est vide ou ne commence pas par une lettre, utilisez-le tel quel
+                    usernameSpan.textContent = followerInfo.nickname;
+                }
+                
                   liElement.appendChild(imgHumain);
                   liElement.appendChild(usernameSpan);
                   listItemLink.appendChild(liElement);

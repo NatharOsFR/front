@@ -18,37 +18,23 @@ function getDataCard(postidlast, callback) {
 
         // Écoute de l'événement 'reponsegetPostProfile' une seule fois
         socket.once('reponsegetPostProfile', (response1) => {
-            console.log(response1.response);
+          
             callback(response1.response); // Utilisez le callback pour transmettre la réponse
         });
     });
 }
 
-function idToNickname(id, callback) {
-    // Émission de l'événement 'connexion' vers le serveur
-    socket.emit('getProfileDataById', { user_id: id });
-    socket.once('reponsegetProfileDataById', (response) => {
-        console.log(response.response.nickname);
-        callback(response.response.nickname); // Utilisez le callback pour transmettre la réponse
-    });
-}
-
 function getUserInfoById(id, callback) {
   // Émission de l'événement 'getProfileDataById' vers le serveur
-  socket.emit('getProfileDataById', { user_id: id });
+  socket.emit('userGroup', { users_id: id ,token});
 
   // Écoute de l'événement 'reponsegetProfileDataById' une seule fois
-  socket.once('reponsegetProfileDataById', (response) => {
-      const userInfo = {
-          nickname: response.response.nickname,
-          picture: response.response.picture || 'includes/default-profile-picture.jpg', // Remplacez 'default-profile-picture.jpg' par le chemin de votre image par défaut
-      };
-
-      callback(userInfo); // Utilisez le callback pour transmettre la réponse
+  socket.once('reponseuserGroup', (response) => {
+      callback(response);
   });
 }
 
-function generateCard(postData) {
+function generateCard(postData,ownerdata,creatorInfo) {
   const card = document.createElement('div');
   card.className = 'card';
    card.classList.add('cardCSS');
@@ -67,26 +53,23 @@ function generateCard(postData) {
   image.className = 'imgMain';
   card.appendChild(image);
 
-  // Utilise la fonction getUserInfoById pour obtenir le nom d'utilisateur et la photo de profil
-  getUserInfoById(postData.creatorId, (creatorInfo) => {
-    const user = document.createElement('h3');
-    user.className = 'user';
-    user.innerHTML = `<div class="titre"><img src="${creatorInfo.picture||"includes/humain.png"}" class="imgHumain"> ${creatorInfo.nickname}</div>`;
-    leftSide.appendChild(user);
-  });
-
   const description = document.createElement('p');
   description.className = 'description';
   description.textContent = postData.description;
   leftSide.appendChild(description);
-
+  // Utilise la fonction getUserInfoById pour obtenir le nom d'utilisateur et la photo de profil
+  
+    const user = document.createElement('h3');
+    user.className = 'user';
+    user.innerHTML = `<div class="titre"><img src="${creatorInfo.picture||"includes/humain.png"}" class="imgHumain"> ${creatorInfo.nickname}</div>`;
+    leftSide.appendChild(user);
   // Ajoute la partie seulement si postData.buy est true
   if (postData.buy) {
-    getUserInfoById(postData.creatorId, (creatorInfo) => {
+   
       const ownerInfo = document.createElement('div');
       ownerInfo.className = 'owner-info';
       ownerInfo.innerHTML = `
-        <h5 class="titreInfoPost" ><img src="${creatorInfo.picture||"includes/dl.png"}" class="imgHumain"> ${creatorInfo.nickname}</h5>
+        <h5 class="titreInfoPost" ><img src="${ownerdata.picture||"includes/dl.png"}" class="imgHumain"> ${ownerdata.nickname}</h5>
         <div class="containerPostPrix">
           <img src="includes/MatriceCoin.png" class="imgPostMoney">
           <span class="textPrixPost">${postData.price}</span>
@@ -94,7 +77,7 @@ function generateCard(postData) {
         </div>
       `;
       rightSide.appendChild(ownerInfo);
-    });
+
   }
 
   const actionButtons = document.createElement('div');
@@ -140,49 +123,80 @@ while (cardContainer.firstChild) {
 }
 
 // Fonction pour charger le prochain lot de posts
-function loadNextPosts() {
-    if (!loading) {
-        loading = true;
+async function loadNextPosts() {
+  if (!loading) {
+    loading = true;
 
-        // Utilisez le dernier post_id pour charger les nouveaux posts
-        getDataCard(lastPostId, (newPosts) => {
-            // Ajoute les nouvelles cartes pour chaque nouveau post
-            for (const postData of newPosts) {
-                // Vérifie si l'ID du post a déjà été affiché
-                if (!displayedPostIds.includes(postData._id)) {
-                    const card = generateCard(postData);
-                    cardContainer.appendChild(card);
-
-                    // Ajoute l'ID du post à la liste des IDs déjà affichés
-                    displayedPostIds.push(postData._id);
-                }
-            }
-
-            // Met à jour le dernier post_id
-            if (newPosts.length > 0) {
-                lastPostId = newPosts[newPosts.length - 1]._id;
-            }
-
-            loading = false;
-        });
-    }
-}
-
-// Exemple d'utilisation de la fonction avec un callback
-getDataCard("", (postsFromSocket) => {
-    console.log(postsFromSocket);
-
-    // Génère et affiche les cartes pour chaque post
-    for (const postData of postsFromSocket) {
+    // Utilisez le dernier post_id pour charger les nouveaux posts
+    getDataCard(lastPostId, async (newPosts) => {
+      // Ajoute les nouvelles cartes pour chaque nouveau post
+      for (const postData of newPosts) {
         // Vérifie si l'ID du post a déjà été affiché
         if (!displayedPostIds.includes(postData._id)) {
-            const card = generateCard(postData);
-            cardContainer.appendChild(card);
-
-            // Ajoute l'ID du post à la liste des IDs déjà affichés
-            displayedPostIds.push(postData._id);
+         
         }
+      }
+
+      // Met à jour le dernier post_id
+      if (newPosts.length > 0) {
+        lastPostId = newPosts[newPosts.length - 1]._id;
+      }
+
+      loading = false;
+    });
+  }
+}
+
+// Fonction pour obtenir les informations du propriétaire de manière asynchrone
+function getData(postData) {
+  return new Promise((resolve) => {
+    getUserInfoById([postData.creatorId,postData.ownerId], (ownerData) => {
+    resolve(ownerData);
+    });
+  });
+}
+
+// Fonction pour générer une carte avec toutes les informations
+async function generateAndDisplayCard(postData) {
+  const userInfo = await getData(postData);
+  const userdata = userInfo.response
+  const lenghtuser = userdata.length;
+    // Création d'objets utilisateur avec seulement nickname et picture
+  if (lenghtuser==2){
+    const usercreator = {
+        nickname: userdata[0].nickname,
+        picture: userdata[0].picture
+    };
+
+    const owneruser = {
+        nickname: userdata[1].nickname,
+        picture: userdata[1].picture
+    };
+    const card = generateCard(postData,owneruser, usercreator);
+    cardContainer.appendChild(card);
+    displayedPostIds.push(postData._id);
+    
+  }else{
+    const usercreator = {
+        nickname: userdata[0].nickname,
+        picture: userdata[0].picture
+    };
+      const card = generateCard(postData,usercreator, usercreator);
+      cardContainer.appendChild(card);
+      displayedPostIds.push(postData._id);
+    };
+}
+  
+
+// Exemple d'utilisation avec une boucle asynchrone
+getDataCard("", async (postsFromSocket) => {
+
+  // Affichez les cartes de manière asynchrone
+  for (const postData of postsFromSocket) {
+    if (!displayedPostIds.includes(postData._id)) {
+      await generateAndDisplayCard(postData);
     }
+  }
 });
 
 // Ajoute un gestionnaire d'événement pour détecter le défilement

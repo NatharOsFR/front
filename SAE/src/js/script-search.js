@@ -55,7 +55,13 @@ socket.on('reponserechercheUser', (results) => {
           }
           });  
         // Mettez ici l'URL de la page de profil
-          usernameLink.textContent = user.nickname;
+        if (user.nickname && /^[a-zA-Z]/.test(user.nickname)) {
+            // Mettez la première lettre en majuscule
+            const capitalizedNickname = user.nickname.charAt(0).toUpperCase() + user.nickname.slice(1);
+            usernameLink.textContent = capitalizedNickname;
+        } else {
+            usernameLink.textContent = user.nickname;
+        }
           usernameLink.classList.add('username');
           contentContainer.appendChild(usernameLink);
 
@@ -65,16 +71,16 @@ socket.on('reponserechercheUser', (results) => {
           // Ajoute l'élément de liste à la liste
           resultsContainer.appendChild(listItem);
       });
-
-        if (results.response.length > maxResultsToShow) {
-            // Si le nombre total de résultats est supérieur au nombre maximal à afficher, ajoute un bouton "Voir plus"
-            // Création du bouton "Voir plus"
-            const seeMoreButton = document.createElement('button');
-            seeMoreButton.textContent = 'Voir plus';
-            seeMoreButton.classList.add('button-see-more');
-            seeMoreButton.addEventListener('click', seeMoreButton);
-            resultsContainer.appendChild(seeMoreButton);
-        }
+      if (results.response.length > maxResultsToShow) {
+          localStorage.setItem('results', JSON.stringify(results));
+          const seeMoreButton = document.createElement('button');
+          seeMoreButton.textContent = 'Voir plus';
+          seeMoreButton.classList.add('button-see-more');
+          seeMoreButton.addEventListener('click', function () {
+              window.location.href = '/?url=recherche';
+          });
+          resultsContainer.appendChild(seeMoreButton);
+      }
     } else {
         // Aucun résultat trouvé
         const noResultsMessage = document.createElement('p');

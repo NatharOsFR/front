@@ -11,6 +11,7 @@
         <li><a href="?url=abonnements">Abonnements</a></li>
         <li><a href="?url=abonnes">Abonnés</a></li>
         <li><a href="?url=compte">Compte</a></li>
+        <li><a href="?url=messagerie">Messagerie</a></li>
         <li><a href="?url=mentionLegales">Mentions légales</a></li>
         </div>
         <li><a>
@@ -41,7 +42,7 @@
       <button class="rounded-button">Accueil</button> </a>
       <a class="nav-link <?php if($menu['page'] == "boutique") echo "active" ?>" aria-current="page" href="?url=boutique">
       <button class="rounded-button" ><span class="fa-solid fa-cart-shopping fa-bounce"></span>ㅤBoutique</button></a>
-      <a id="connexionButton" class="nav-link <?php if($menu['page'] == "connexion") echo "active" ?>" aria-current="page" href="?url=connexion">
+      <a id="connexionInscription" class="nav-link <?php if($menu['page'] == "connexion") echo "active" ?>" aria-current="page" href="?url=connexion">
        <button class="rounded-button connexionBouton">Connexion/Inscription</button></a>
       
 

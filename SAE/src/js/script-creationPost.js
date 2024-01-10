@@ -88,7 +88,6 @@ const toggleLabel = document.querySelector(".post-toggle-label span");
 
 
 
-
 toggleSwitch.addEventListener("change", () => {
   if (toggleSwitch.checked) {
     toggleLabel.textContent = "Achetable";
@@ -100,13 +99,27 @@ toggleSwitch.addEventListener("change", () => {
 
 function previewImage(input) {
     const imagePreview = document.getElementById("image-preview");
+
     if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            imagePreview.src = e.target.result;
-            imagePreview.style.display = "block";
+        const file = input.files[0];
+
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+
+        img.onload = function () {
+            if (img.width > 2 * img.height || img.height > 2 * img.width) {
+                alert("Les dimensions de l'image sont trop grandes. Veuillez sélectionner une image plus petite.");
+                input.value = '';
+                imagePreview.style.display = "none";
+            } else {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            }
         };
-        reader.readAsDataURL(input.files[0]);
     } else {
         imagePreview.style.display = "none";
     }
@@ -158,7 +171,7 @@ tagsInput.addEventListener('keydown', function (e) {
 function addTag(tagText) {
   if (tagsContainer.querySelectorAll('.tag').length < maxTags) {
     if (tagsList.size < maxTags && !tagsList.has(tagText)) {
-      tagsList.add(tagText); // Ajouter le tag au Set des tags uniques
+      tagsList.add(tagText); 
       const tag = document.createElement('div');
       tag.className = 'tag';
       tag.textContent = tagText;
@@ -168,6 +181,7 @@ function addTag(tagText) {
       if(tagsList.size == maxTags){
          showLabelButton.style.display = "none";
       }
+      
     } else {
       // Afficher un message d'erreur si le tag est en double ou si la limite est atteinte
       console.log('Limite de tags atteinte (5 tags maximum) ou tag en double.');
@@ -179,13 +193,17 @@ function addTag(tagText) {
 }
 
 tagsContainer.addEventListener('click', function (e) {
+  const tagsInput = document.getElementById("tags");
+  if (tagsInput) {
+    tagsInput.focus();
+  }
   if (e.target.classList.contains('tag')) {
     const removedTag = e.target.textContent;
-    tagsList.delete(removedTag); // Retirer le tag du Set des tags uniques
+    tagsList.delete(removedTag);
     e.target.remove();
     showLabelButton.style.display = "block";
-    
   }
+  
 });
 
 

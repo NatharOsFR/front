@@ -41,7 +41,7 @@
                 <label for="dateNaissance">Date de naissance</label>
                 <input type="date" id="dateNaissance" name="dateNaissance" onblur="validateDate()" required>
                 <label for="pseudo">Pseudo</label>
-                <input type="text" id="pseudo" name="pseudo" maxlength="20" required>
+                <input type="text" id="pseudo" name="pseudo" maxlength="20" pattern="[^.]*" required>
             </div>
 
             <div class="InscriptionDroite">

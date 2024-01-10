@@ -33,8 +33,18 @@ function calculateAge(birthday) {
 
 function loadProfileData() {
   socket.emit('user',{nickname});
-  socket.once('reponseuser', (userData) => {
-    document.getElementById('profile-username').innerText = userData.response.nickname;
+    socket.once('reponseuser', (userData) => {
+    const usernameElement = document.getElementById('profile-username');
+
+    // Vérifiez si le nickname n'est pas vide et s'il commence par une lettre
+    if (userData.response.nickname && /^[a-zA-Z]/.test(userData.response.nickname)) {
+        // Mettez la première lettre en majuscule
+        const capitalizedNickname = userData.response.nickname.charAt(0).toUpperCase() + userData.response.nickname.slice(1);
+        usernameElement.innerText = capitalizedNickname;
+    } else {
+        // Le nickname est vide ou ne commence pas par une lettre, utilisez-le tel quel
+        usernameElement.innerText = userData.response.nickname;
+    }
     document.getElementById('profile-image').src = userData.response.picture;
     document.getElementById('profile-age').innerText = `${calculateAge(userData.response.birthday)} ans`;
     document.getElementById('profile-bio').innerText = userData.response.bio || 'Aucune biographie disponible';

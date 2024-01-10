@@ -25,15 +25,24 @@ function loadFollowedBatch() {
                     liElement.className = 'followed';
 
                     // Crée un élément d'ancre (<a>) pour l'ensemble du <li>
-                    const listItemLink = document.createElement('a');
-                    listItemLink.href = `/user/${followedInfo.nickname}`;
+                  const listItemLink = document.createElement('a');
+                  listItemLink.href = `/user/${followedInfo.nickname}`;
 
-                    const imgHumain = document.createElement('img');
-                    imgHumain.src = followedInfo.picture || 'includes/default-profile-picture.jpg'; // Image par défaut
-                    imgHumain.className = 'imgAbonnements';
+                  const imgHumain = document.createElement('img');
+                  imgHumain.src = followedInfo.picture || 'includes/default-profile-picture.jpg'; // Image par défaut
+                  imgHumain.className = 'imgAbonnements';
 
-                    const usernameSpan = document.createElement('span');
-                    usernameSpan.textContent = followedInfo.nickname;
+                  const usernameSpan = document.createElement('span');
+
+              
+                  if (followedInfo.nickname && /^[a-zA-Z]/.test(followedInfo.nickname)) {
+
+                      const capitalizedNickname = followedInfo.nickname.charAt(0).toUpperCase() + followedInfo.nickname.slice(1);
+                      usernameSpan.textContent = capitalizedNickname;
+                  } else {
+                  
+                      usernameSpan.textContent = followedInfo.nickname;
+                  }
 
                     liElement.appendChild(imgHumain);
                     liElement.appendChild(usernameSpan);

@@ -24,7 +24,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Function to update the profile data on the page
 function updateProfileData(profileData) {
-  document.getElementById('profile-username').innerText = profileData.response.nickname;
+  const usernameElement = document.getElementById('profile-username');
+  const rank = profileData.response.rank;
+  const imgElement = document.getElementById('profile-img'); // Assurez-vous d'avoir un élément avec l'id 'profile-img'
+
+  switch (rank) {
+    case 1:
+        imgElement.src = "includes/Rang1.png";
+      break;
+
+    case 2:
+        imgElement.src = "includes/Rang2.png";
+      break;
+
+    case 3:
+      imgElement.src = "includes/Rang3.png";
+      break;
+
+    case 4:
+      imgElement.src = "includes/Rang4.png";
+      break;
+      
+    case 5:
+        imgElement.src = "includes/Rang5.png";
+      break;
+      
+    case 6:
+      imgElement.src = "includes/Rang6.png";
+      break;
+      
+    default:
+      usernameElement.textContent = "Rang inconnu";
+      
+      break;
+  }
+
+  // Vérifiez si le nickname n'est pas vide et s'il commence par une lettre
+  if (profileData.response.nickname && /^[a-zA-Z]/.test(profileData.response.nickname)) {
+      // Mettez la première lettre en majuscule
+      const capitalizedNickname = profileData.response.nickname.charAt(0).toUpperCase() + profileData.response.nickname.slice(1);
+      usernameElement.innerText = capitalizedNickname;
+  } else {
+      // Le nickname est vide ou ne commence pas par une lettre, utilisez-le tel quel
+      usernameElement.innerText = profileData.response.nickname;
+  }
   document.getElementById('profile-image').src = profileData.response.picture;
   document.getElementById('profile-age').innerText = `${calculateAge(profileData.response.birthday)} ans`;
   document.getElementById('profile-bio').innerText = profileData.response.bio || 'Aucune biographie disponible';
@@ -41,11 +84,6 @@ function calculateAge(birthday) {
   const age = currentDate.getFullYear() - birthDate.getFullYear();
   return age;
 }
-
-
-
-
-
 
 // Fonction pour activer la modification du profil
 function enableProfileEditing() {
@@ -73,18 +111,37 @@ function enableProfileEditing() {
     profileImageInput.type = "file";
     profileImageInput.accept = "image/*";
 
-    // Ajouter un gestionnaire d'événement pour surveiller les changements de fichier
-    profileImageInput.addEventListener("change", function () {
-        const selectedImage = profileImageInput.files[0];
-        if (selectedImage) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const profileImage = document.getElementById("profile-image");
-                profileImage.src = e.target.result;
-            };
-            reader.readAsDataURL(selectedImage);
-        }
-    });
+   
+  profileImageInput.addEventListener("change", function () {
+      const selectedImage = profileImageInput.files[0];
+      const maxFileSize = 2 * 1024 * 1024;
+
+      if (selectedImage) {
+          // Vérification de la taille du fichier
+          if (selectedImage.size > maxFileSize) {
+              alert("La taille du fichier est trop grande. Veuillez sélectionner un fichier plus petit.");
+              profileImageInput.value = '';
+              return;
+          }
+
+          const img = new Image();
+          img.src = URL.createObjectURL(selectedImage);
+
+          img.onload = function () {
+              if (img.width > 2 * img.height || img.height > 2 * img.width) {
+                  alert("Les dimensions de l'image sont trop grandes. Veuillez sélectionner une image plus petite.");
+                  profileImageInput.value = '';
+              } else {
+                  const reader = new FileReader();
+                  reader.onload = function (e) {
+                      const profileImage = document.getElementById("profile-image");
+                      profileImage.src = e.target.result;
+                  };
+                  reader.readAsDataURL(selectedImage);
+              }
+          };
+      }
+  });
 
     // Ajouter les éléments créés à l'élément bio
     bio.innerHTML = ""; // Supprimer le contenu existant

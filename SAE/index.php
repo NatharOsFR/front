@@ -9,6 +9,9 @@ require_once('src/controllers/c-abonnements.php');
 require_once('src/controllers/c-abonnes.php');
 require_once('src/controllers/c-mention_legales.php');
 require_once('src/controllers/c-compte.php');
+require_once('src/controllers/c-messagerie.php');
+require_once('src/controllers/c-recherche.php');
+
 
 $requestUri = $_SERVER['REQUEST_URI'];
 
@@ -58,6 +61,9 @@ $page = end($urlSegments);
             case "profil":
                 profil();
                 break;
+            case "messagerie":
+                messagerie();
+                break;
             case "abonnements":
                 abonnements();
                 break;
@@ -72,6 +78,9 @@ $page = end($urlSegments);
                 break;
             case "compte":
                 compte();
+                break;
+          case "recherche":
+                recherche();
                 break;
             default:
                 accueil();

@@ -5,7 +5,7 @@
   <script src="/src/js/chargement.js" defer></script>
   <script src="/src/js/redirection.js" defer></script>
   
-  <div class="container-center" id="followdContainer">
+  <div class="container-center" id="followedContainer">
     <h3 class="followed-titre">Liste des abonnements</h3>
     <div class="followed-container">
         <ul class="followed-list">

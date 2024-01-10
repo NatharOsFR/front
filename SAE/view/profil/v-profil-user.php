@@ -28,7 +28,10 @@
                           <p>138 abonnés</p>
                           <p>230 abonnements</p>
                       </div>
-                      
+                      <div class="Monney"  style="visibility: hidden;">
+                          <div class="Coins">Matrice Coins: 0</div>
+                          <img src="includes/MatriceCoin.png" class="ImgCoins">
+                      </div>
                       <button type="button" class="subscribe-button" id="subscribe-button" >S'abonner</button>
                   </div>
               </div>
