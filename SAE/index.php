@@ -25,7 +25,7 @@ $urlSegments = array_filter($urlSegments);
 $page = end($urlSegments);
 
 // Vérifier si l'URL est de la forme "user/nickname"
-  if (isset($urlSegments[1]) && $urlSegments[1] === '?url=user' && isset($urlSegments[2])) {
+  if (isset($urlSegments[1]) && $urlSegments[1] === 'user' && isset($urlSegments[2])) {
 
     // Récupérer le nickname
     $nickname = $urlSegments[2];
@@ -34,8 +34,7 @@ $page = end($urlSegments);
     profiluser($nickname);
   }
     else if (isset($urlSegments[1]) && $urlSegments[1] === 'post' && isset($urlSegments[2])) {
-    print(implode(', ', $urlSegments));
-    print('capasse');  
+    
     // Récupérer l'id du post
     $postonly = $urlSegments[2];
 
@@ -63,7 +62,7 @@ $page = end($urlSegments);
                 profil();
                 break;
             case "messagerie":
-                messagerie();
+          postonly('6569ebd1891495dc36f80d2a');
                 break;
             case "abonnements":
                 abonnements();
