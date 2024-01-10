@@ -93,7 +93,7 @@ async function creationUser(event) {
     // Vérification du code de retour
     if (response.statusCode === 200) {
       console.log('La requête a été traitée avec succès.');
-      window.location.href = "https://mortifiedenchantingmenu.ni0de0.repl.co/?url=connexion";
+      window.location.href = "/?url=connexion";
       // Afficher un message de succès à l'utilisateur
       alert('Inscription réussie !');
     } else if (response.statusCode === 400) {

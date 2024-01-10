@@ -1,3 +1,9 @@
+<body>
+  <div id="loader" class="loader">
+      <div class="loader-inner"></div>
+  </div>
+  <script src="/src/js/chargement.js" defer></script>
+  <script src="/src/js/redirection.js" defer></script>
 <div id="chat-container">
   <div id="sidebar">
       <label style="color: black;">Sélectionnez un salon :</label>
@@ -21,3 +27,4 @@
   </div>
 </div>
 <script src="/src/js/messagerie.js" defer></script>
+</body>

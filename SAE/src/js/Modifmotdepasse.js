@@ -72,7 +72,7 @@ updatePasswordButton.addEventListener('click', () => {
             document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 
             // Redirigez l'utilisateur vers la page de connexion
-            window.location.href = 'https://mortifiedenchantingmenu.ni0de0.repl.co/?url=connexion'; // Remplacez '/login' par le chemin de votre page de connexion
+            window.location.href = '/?url=connexion'; // Remplacez '/login' par le chemin de votre page de connexion
         } else {
             alert(`Échec de la mise à jour du mot de passe : ${response.response}`);
         }

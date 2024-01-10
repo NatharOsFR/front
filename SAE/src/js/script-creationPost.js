@@ -73,7 +73,7 @@ const toggleLabel = document.querySelector(".post-toggle-label span");
             // Afficher un message de succès à l'utilisateur
             alert('Post créé avec succès !');
             // Rediriger l'utilisateur ou effectuer d'autres actions après la création réussie du post
-            window.location.href = "https://mortifiedenchantingmenu.ni0de0.repl.co";
+            window.location.href = "/?url=accueil";
         } else if (response.statusCode === 400) {
             console.error('La création du post a échoué. Erreur côté client:', response.message);
             // Afficher un message d'erreur à l'utilisateur
