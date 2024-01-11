@@ -840,6 +840,9 @@ input:checked + .slider:before {
     border-radius: 15px;
     background-image: linear-gradient(to bottom, #C7E6F0 0%, #ffffff 50%, #C7E6F0 100%);
     text-align: center;
+    display: flex;
+    justify-content: center;
+    width: 40%;
 }
 
 .followers-titre, .followed-titre, .recherche-titre {

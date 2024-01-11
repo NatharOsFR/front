@@ -25,7 +25,7 @@ function loadFollowedBatch() {
 
                     // Crée un élément d'ancre (<a>) pour l'ensemble du <li>
                   const listItemLink = document.createElement('a');
-                  listItemLink.href = `/user/${followedInfo.nickname}`;
+                  listItemLink.href = `/?url=user/${followedInfo.nickname}`;
 
                   const imgHumain = document.createElement('img');
                   imgHumain.src = followedInfo.picture || 'includes/default-profile-picture.jpg'; // Image par défaut

@@ -267,8 +267,66 @@ function sendComment(postId, commentText) {
         console.log('Réponse du serveur (addComment):', response);
     });
 }
+function createCommentElement(comment) {
+    return new Promise((resolve, reject) => {
+        const commentElement = document.createElement('div');
+        commentElement.className = 'comment';
 
-function showComments(postId, comments) {
+        const userContainer = document.createElement('div');
+        userContainer.className = 'user-container';
+
+        const userSousContainer = document.createElement('div');
+        userSousContainer.className = 'user-souscontainer';
+
+        const userImage = document.createElement('img');
+        userImage.className = 'user-image';
+
+        const userNickname = document.createElement('span');
+        userNickname.className = 'user-nickname';
+
+        getUserInfoById(comment.creatorId, (creatorInfo) => {
+            userImage.src = creatorInfo.picture || 'includes/default-profile-picture.jpg';
+
+            if (creatorInfo.nickname && /^[a-zA-Z]/.test(creatorInfo.nickname)) {
+                const capitalizedNickname = creatorInfo.nickname.charAt(0).toUpperCase() + creatorInfo.nickname.slice(1);
+                userNickname.textContent = capitalizedNickname + " : ";
+            } else {
+                userNickname.textContent = creatorInfo.nickname + " : ";
+            }
+
+            userSousContainer.appendChild(userImage);
+            userSousContainer.appendChild(userNickname);
+            userContainer.appendChild(userSousContainer);
+
+            const commentText = document.createElement('span');
+            commentText.textContent = comment.description;
+            userContainer.appendChild(commentText);
+            commentElement.appendChild(userContainer);
+
+            const likeButtonContainer = document.createElement('div');
+            likeButtonContainer.className = 'ContainerLikeText';
+            const likeCount = document.createElement('div');
+            likeCount.style.fontSize = '20px';
+            likeCount.textContent = '0';
+
+            const likeButton = document.createElement('img');
+            likeButton.src = 'includes/like.png';
+            likeButton.alt = 'Like';
+            likeButton.className = 'img-like';
+
+            likeButton.addEventListener('click', () => {
+                console.log(`Commentaire ID ${comment._id} liké !`);
+            });
+
+            likeButtonContainer.appendChild(likeCount);
+            likeButtonContainer.appendChild(likeButton);
+            commentElement.appendChild(likeButtonContainer);
+
+            resolve(commentElement);
+        });
+    });
+}
+async function showComments(postId, comments) {
     // Trouver ou créer le conteneur des commentaires
     let commentContainer = document.getElementById(`comments-${postId}`);
 
@@ -281,85 +339,11 @@ function showComments(postId, comments) {
 
   }
 
-
-    // Efface tous les commentaires existants
-    while (commentContainer.firstChild) {
-        commentContainer.removeChild(commentContainer.firstChild);
-    }
-
-    // Affiche les nouveaux commentaires
-    comments.forEach((comment) => {
-        const commentElement = document.createElement('div');
-        commentElement.className = 'comment';
-
-      
-        // Créer un élément pour le nickname et la photo de profil
-        const userContainer = document.createElement('div');
-        userContainer.className = 'user-container';
-
-        const userSousContainer = document.createElement('div');
-        userSousContainer.className = 'user-souscontainer';
-        
-        // Ajouter la photo de profil
-        const userImage = document.createElement('img');
-        // Récupérer la picture du créateur du commentaire
-        getUserInfoById(comment.creatorId, (creatorInfo) => {
-            userImage.src = creatorInfo.picture || 'includes/default-profile-picture.jpg';
-        });
-        userImage.className = 'user-image';
-        userSousContainer.appendChild(userImage);
-
-        // Ajouter le nickname
-        const userNickname = document.createElement('span');
-        // Récupérer le nickname du créateur du commentaire
-      getUserInfoById(comment.creatorId, (creatorInfo) => {
-          // Vérifiez si le nickname n'est pas vide et s'il commence par une lettre
-          if (creatorInfo.nickname && /^[a-zA-Z]/.test(creatorInfo.nickname)) {
-              // Mettez la première lettre en majuscule
-              const capitalizedNickname = creatorInfo.nickname.charAt(0).toUpperCase() + creatorInfo.nickname.slice(1);
-              userNickname.textContent = capitalizedNickname + " : ";
-          } else {
-              // Le nickname est vide ou ne commence pas par une lettre, utilisez-le tel quel
-              userNickname.textContent = creatorInfo.nickname + " : ";
-          }
-      });
-        userNickname.className = 'user-nickname';
-        userSousContainer.appendChild(userNickname);
-
-        // Ajouter le conteneur du nickname et de la photo de profil à l'élément du commentaire
-  
-       userContainer.appendChild(userSousContainer);
-        // Ajouter le texte du commentaire
-        const commentText = document.createElement('span');
-        commentText.textContent = comment.description;
-        userContainer.appendChild(commentText);
-        commentElement.appendChild(userContainer);
-
-        // Ajouter le bouton de like
-      const likeButtonContainer = document.createElement('div');
-      likeButtonContainer.className = 'ContainerLikeText';
-      const likeCount = document.createElement('div');
-      likeCount.style.fontSize = '20px';
-      likeCount.textContent = '0';
-
-      const likeButton = document.createElement('img');
-      likeButton.src = 'includes/like.png';
-      likeButton.alt = 'Like';
-      likeButton.className = 'img-like';
-
-      likeButton.addEventListener('click', () => {
-          // Mettez ici la logique pour gérer le like du commentaire
-          console.log(`Commentaire ID ${comment._id} liké !`);
-      });
-      
-      likeButtonContainer.appendChild(likeCount);
-      likeButtonContainer.appendChild(likeButton);
-
-      commentElement.appendChild(likeButtonContainer);
-
-        // Ajouter l'élément du commentaire au conteneur des commentaires
-        commentContainer.appendChild(commentElement);
-    });
+  // Affiche les nouveaux commentaires
+  for (const comment of comments) {
+      const commentElement = await createCommentElement(comment);
+      commentContainer.appendChild(commentElement);
+  }
 }
 
 

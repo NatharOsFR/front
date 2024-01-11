@@ -54,7 +54,7 @@ function getUserInfoById(id, callback) {
 function generateCard(postData,ownerdata,creatorInfo) {
   const card = document.createElement('div');
   card.className = 'card';
-   card.classList.add('cardCSS');
+  card.classList.add('cardCSS');
 
   const Infos = document.createElement('div');
   Infos.className = 'Infos';
@@ -106,9 +106,13 @@ function generateCard(postData,ownerdata,creatorInfo) {
   actionButtons.appendChild(chat);
 
   const like = document.createElement('img');
-  like.src = 'includes/like.png';
   like.className = 'img-like';
+  like.Name = 'img-like';
+  like.setAttribute('post-id', postData._id);
+  like.src = 'includes/like.png';
+  
   actionButtons.appendChild(like);
+
 
   const compteurLike = document.createElement('div');
   compteurLike.textContent = postData.likes;
@@ -123,6 +127,7 @@ function generateCard(postData,ownerdata,creatorInfo) {
   rightSide.appendChild(actionButtons);
   Infos.appendChild(leftSide);
   Infos.appendChild(rightSide);
+  
   card.appendChild(Infos);
 
   // Ajoute un gestionnaire d'événements "click" à la carte

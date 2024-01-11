@@ -25,10 +25,10 @@ function loadFollowersBatch() {
 
                   // Crée un élément d'ancre (<a>) pour l'ensemble du <li>
                 const listItemLink = document.createElement('a');
-                listItemLink.href = `/user/${followerInfo.nickname}`;
+                listItemLink.href = `/?url=user/${followerInfo.nickname}`;
 
                 const imgHumain = document.createElement('img');
-                imgHumain.src = followerInfo.picture || 'includes/default-profile-picture.jpg'; // Image par défaut
+                imgHumain.src = followerInfo.picture || 'includes/default-profile-picture.jpg';
                 imgHumain.className = 'imgAbonnes';
 
                 const usernameSpan = document.createElement('span');

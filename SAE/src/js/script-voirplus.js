@@ -60,7 +60,7 @@ function displayResults(results) {
         // Attendez la réponse du socket
         socket.once('reponsegetProfileData', (data) => {
             if (data.response.nickname !== user.nickname) {
-                usernameLink.href = `/user/${user.nickname}`;
+                usernameLink.href = `/?url=user/${user.nickname}`;
             } else {
                 usernameLink.href = `/?url=profil`;
             }

@@ -1,4 +1,4 @@
-let currentRoom = 'general'; // Définir le salon par défaut
+  let currentRoom = 'general'; // Définir le salon par défaut
 let messagesContainer; 
 let messageInput;
 let roomButtons;
@@ -135,6 +135,10 @@ function addMessage(message, nickname, picture) {
     const image = document.createElement('img');
     image.src = picture || "includes/plus.png";
     image.alt = 'Image de profil';
+  
+    image.style.width = '5%';
+    image.style.height = '5%';
+    image.style.borderRadius = '50%';
 
     messageElement.appendChild(image);
 

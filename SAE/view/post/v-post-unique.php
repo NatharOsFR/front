@@ -10,7 +10,7 @@
     <div id="cardContainer" class="solocontainer">
     </div>
   </div>
-  <!-- Ajoutez cette boîte de dialogue à votre fichier HTML -->
+  
   <div id="buyConfirmationDialog" class="confirmation-dialog">
       <div class="dialog-content">
           <p>Voulez-vous vraiment acheter ce post ?</p>
@@ -18,6 +18,5 @@
           <button id="cancelBuy">Annuler</button>
       </div>
   </div>
-
   <script src="/src/js/post-unique.js" defer></script>
 </body>

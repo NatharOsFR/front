@@ -113,6 +113,24 @@ function generateCard(postData,ownerdata,creatorInfo) {
     // Redirige vers le lien /post/idpost
     window.location.href = `/?url=post/${postData._id}`;
   });
+
+  partage.addEventListener('click', function() {
+    let urlActuelle = window.location.href;
+
+    urlActuelle = urlActuelle.replace(/\?url=profil$/, `?url=post/${postData._id}`);
+
+
+      const tempTextarea = document.createElement('textarea');
+      tempTextarea.value = urlActuelle;
+      document.body.appendChild(tempTextarea);
+
+      tempTextarea.select();
+      document.execCommand('copy');
+
+      document.body.removeChild(tempTextarea);
+
+      alert('L\'URL a été copiée dans le presse-papiers.');
+  });
   
   return card;
 }
