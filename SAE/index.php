@@ -24,20 +24,10 @@ $urlSegments = array_filter($urlSegments);
 // Récupérer le dernier segment (qui devrait être la page demandée)
 $page = end($urlSegments);
 
-// Vérifier si l'URL est de la forme "user/nickname"
-if (isset($urlSegments[1]) && $urlSegments[1] === 'user' && isset($urlSegments[2])) {
 
-    // Récupérer le nickname
-    $nickname = $urlSegments[2];
-
-    // Appeler la fonction avec le nickname
-    profiluser($nickname);
-}
- else {
     // Traiter les autres cas
     if(isset($_GET['url']) && $_GET['url']){
         $url = rtrim($_GET['url'], '/');
-        print($url);
         switch ($url){
             case "connexion":
                 connexion();
@@ -51,8 +41,11 @@ if (isset($urlSegments[1]) && $urlSegments[1] === 'user' && isset($urlSegments[2
             case "post":
               post();
               break;
-            case "post/" . $urlSegments[2]:
-              postonly($urlSegments[2]);
+            case "post/" . (isset($urlSegments[2]) ? $urlSegments[2] : ''):
+              postonly(isset($urlSegments[2]) ? $urlSegments[2] : '');
+              break;
+            case "user/" . (isset($urlSegments[2]) ? $urlSegments[2] : ''):
+              profiluser(isset($urlSegments[2]) ? $urlSegments[2] : '');
               break;
             case "profil":
                 profil();
@@ -75,7 +68,7 @@ if (isset($urlSegments[1]) && $urlSegments[1] === 'user' && isset($urlSegments[2
             case "compte":
                 compte();
                 break;
-          case "recherche":
+            case "recherche":
                 recherche();
                 break;
             default:
@@ -83,6 +76,6 @@ if (isset($urlSegments[1]) && $urlSegments[1] === 'user' && isset($urlSegments[2
         } 
     } else {
         accueil();
-    }
 }
+
 ?>
