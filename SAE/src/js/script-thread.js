@@ -126,11 +126,29 @@ function generateCard(postData,ownerdata,creatorInfo) {
   card.appendChild(Infos);
 
   // Ajoute un gestionnaire d'événements "click" à la carte
-  card.addEventListener('click', () => {
+  chat.addEventListener('click', () => {
     // Redirige vers le lien /post/idpost
     window.location.href = `/?url=post/${postData._id}`;
   });
 
+  partage.addEventListener('click', function() {
+    let urlActuelle = window.location.href;
+
+    urlActuelle = urlActuelle.replace(/\?url=accueil$/, `?url=post/${postData._id}`);
+
+
+      const tempTextarea = document.createElement('textarea');
+      tempTextarea.value = urlActuelle;
+      document.body.appendChild(tempTextarea);
+
+      tempTextarea.select();
+      document.execCommand('copy');
+
+      document.body.removeChild(tempTextarea);
+
+      alert('L\'URL a été copiée dans le presse-papiers.');
+  });
+  
   return card;
 }
 

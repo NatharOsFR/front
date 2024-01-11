@@ -59,7 +59,6 @@ function generateCard(postData,creatorInfo) {
   
 
   if (postData.buy) {
-    // Utilisez postData.ownerId pour récupérer les informations du propriétaire
     getUserInfoById(postData.ownerId, (ownerData) => {
         
         const ownerInfo = document.createElement('div');
@@ -88,7 +87,6 @@ function generateCard(postData,creatorInfo) {
             `;
         }
 
-          // Add event listener to the "Buy" button
           const buyButton = ownerInfo.querySelector('#imgBuy');
           const buyConfirmationDialog = document.getElementById('buyConfirmationDialog');
           const confirmBuyButton = document.getElementById('confirmBuy');
@@ -125,9 +123,9 @@ function generateCard(postData,creatorInfo) {
           });
 
           rightSide.appendChild(ownerInfo);
+          rightSide.appendChild(actionButtons);
       });
   }
-
 
     const actionButtons = document.createElement('div');
     actionButtons.className = 'actionButtons';
@@ -152,7 +150,23 @@ function generateCard(postData,creatorInfo) {
     partage.className = 'img-partage';
     actionButtons.appendChild(partage);
 
-    rightSide.appendChild(actionButtons);
+    partage.addEventListener('click', function() {
+
+      urlActuelle = window.location.href;
+
+
+        const tempTextarea = document.createElement('textarea');
+        tempTextarea.value = urlActuelle;
+        document.body.appendChild(tempTextarea);
+
+        tempTextarea.select();
+        document.execCommand('copy');
+
+        document.body.removeChild(tempTextarea);
+
+        alert('L\'URL a été copiée dans le presse-papiers.');
+    });
+   
     Infos.appendChild(leftSide);
     Infos.appendChild(rightSide);
     card.appendChild(Infos);
@@ -160,6 +174,9 @@ function generateCard(postData,creatorInfo) {
     const commentBar = generateCommentBar(postData._id);
     card.appendChild(commentBar);
 
+   if (!postData.buy){
+      rightSide.appendChild(actionButtons);
+   }
     return card;
 }
 
@@ -334,7 +351,7 @@ function showComments(postId, comments) {
           // Mettez ici la logique pour gérer le like du commentaire
           console.log(`Commentaire ID ${comment._id} liké !`);
       });
-
+      
       likeButtonContainer.appendChild(likeCount);
       likeButtonContainer.appendChild(likeButton);
 

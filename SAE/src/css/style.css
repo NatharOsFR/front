@@ -140,13 +140,21 @@ body {
     width: 60%;
   margin-right: 5%;
   margin-left: 5%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+
+.left-side > * {
+    width: 100%;
+    box-sizing: border-box; /* Pour inclure les bordures et le padding dans la largeur */
 }
 
 .right-side {
     width: 40%; 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: end;
 }
 
 
@@ -177,23 +185,29 @@ body {
 }
 
   .card .imgMain {
-    width: 75%;
+    width: 500px; 
+    height: 350px; 
+    margin-top: 2%;
   }
   .card .titre{
     font-size:100%;
     display: flex;
     text-align: left;
     align-items: center;
+    gap: 10px;
   }
   .card .imgHumain {
-    width: 15%;
-    border-radius: 50%; /* Transforme l'image en cercle */
-    overflow: hidden;
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    min-height:50px;
+    border-radius: 50%;
     margin-right: 5%;
   }
   .card .titreInfoPost{
     display: flex;
     align-items: center;
+    font-size: 80%;
   }
 
   .card .containerPostPrix {
@@ -233,14 +247,13 @@ body {
     height: auto;
     display: flex;
     align-items: center;
-    margin-top: 5%;
+    margin-left: 8%;
   }
   .card .imgPostMoney{
-    width: 15%;
-    height: 15%;
+    width: 25%;
   }
   .owner-info {
-    background-color: #A50000;
+    background-color: #abe7ed;
     border: 1px solid #ccc;
     padding: 10px;
     border-radius: 15px;
@@ -251,6 +264,7 @@ body {
 .card .Infos {
   display: flex;
   flex-direction: row;
+  margin-top: 3%;
 }
 
                           /* Burger */
@@ -1143,7 +1157,11 @@ input:checked + .slider:before {
   margin-top: 3%;
   width: 100%;
   height: 15%;
-  
+}
+
+.img-chat,
+.img-partage {
+  cursor: pointer;
 }
 
 .commentContainer {

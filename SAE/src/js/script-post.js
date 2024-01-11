@@ -109,7 +109,7 @@ function generateCard(postData,ownerdata,creatorInfo) {
   card.appendChild(Infos);
 
   // Ajoute un gestionnaire d'événements "click" à la carte
-  card.addEventListener('click', () => {
+  chat.addEventListener('click', () => {
     // Redirige vers le lien /post/idpost
     window.location.href = `/?url=post/${postData._id}`;
   });
