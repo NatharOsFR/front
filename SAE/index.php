@@ -23,10 +23,7 @@ $urlSegments = array_filter($urlSegments);
 
 // Récupérer le dernier segment (qui devrait être la page demandée)
 $page = end($urlSegments);
-echo "<script>";
-// Utilisez console.log pour afficher les données dans la console du navigateur
-echo "console.log('" . addslashes(implode(', ', $urlSegments)) . "');";
-echo "</script>";
+
 // Vérifier si l'URL est de la forme "user/nickname"
 if (isset($urlSegments[1]) && $urlSegments[1] === 'user' && isset($urlSegments[2])) {
 
@@ -36,17 +33,11 @@ if (isset($urlSegments[1]) && $urlSegments[1] === 'user' && isset($urlSegments[2
     // Appeler la fonction avec le nickname
     profiluser($nickname);
 }
-else if (isset($urlSegments[1]) && $urlSegments[1] === 'post' && isset($urlSegments[2])) {
-    
-    // Récupérer l'id du post
-    $postonly = $urlSegments[2];
-    // Appeler la fonction avec le nickname
-    postonly($postonly);
-} else {
+ else {
     // Traiter les autres cas
     if(isset($_GET['url']) && $_GET['url']){
         $url = rtrim($_GET['url'], '/');
-
+        print($url);
         switch ($url){
             case "connexion":
                 connexion();
@@ -58,8 +49,11 @@ else if (isset($urlSegments[1]) && $urlSegments[1] === 'post' && isset($urlSegme
                 mentionLegales();
                 break;
             case "post":
-                post();
-                break;
+              post();
+              break;
+            case "post/" . $urlSegments[2]:
+              postonly($urlSegments[2]);
+              break;
             case "profil":
                 profil();
                 break;
