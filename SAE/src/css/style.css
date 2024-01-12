@@ -169,8 +169,9 @@ body {
   }
 
   .card .img-like {
-    width: 100%;
+    width: 90%;
     height: 40%;
+    margin-right: 5%;
   }
 
 
@@ -1124,7 +1125,7 @@ input:checked + .slider:before {
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  width: 30%;
+  width: 35%;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -1158,7 +1159,8 @@ input:checked + .slider:before {
 .img-like {
   cursor: pointer;
   margin-top: 3%;
-  width: 100%;
+  width: 80%;
+  margin-right: 10%;
   height: 15%;
 }
 
@@ -1168,8 +1170,8 @@ input:checked + .slider:before {
 }
 
 .commentContainer {
-  margin-left: 35%;
-  margin-right: 35%;
+  margin-left: 32.5%;
+  margin-right: 32.5%;
   background-image: linear-gradient(to bottom, rgba(233,246,246,0.9) 0%, rgba(233,246,246,0.9) 100%);
   border: 1px solid rgba(0,0,0,.125);
 }
@@ -1186,7 +1188,6 @@ input:checked + .slider:before {
 
 .comment-bar {
   margin: 5%;
-  margin-top: 10%;
   display: flex;
 }
 

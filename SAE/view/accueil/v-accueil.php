@@ -10,7 +10,5 @@
       <button class="fixed-button" ><a class="nav-link lienPost <?php if($menu['page'] == "creationPost") echo "active" ?>" aria-current="page" href="?url=creationPost">+ Nouveau post</a></button>
     </div>
   <script src="/src/js/script-thread.js" defer></script>
-  <script src="/src/js/script-like.js" defer></script>
-
 </body>
  

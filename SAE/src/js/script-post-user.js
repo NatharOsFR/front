@@ -90,8 +90,17 @@ function generateCard(postData,ownerdata,creatorInfo) {
   actionButtons.appendChild(chat);
 
   const like = document.createElement('img');
-  like.src = 'includes/like.png';
+  like.src= 'includes/like.png';
   like.className = 'img-like';
+  like.Name = 'img-like';
+  like.setAttribute('post-id', postData._id);
+  socket.emit('getProfileData', { token });
+
+  // Écoute de l'événement 'reponseconnexion' une seule fois
+  socket.once('reponsegetProfileData', (profilData) => {
+  setupLikeEvent(like, profilData);
+  })
+
   actionButtons.appendChild(like);
 
   const compteurLike = document.createElement('div');
@@ -223,3 +232,78 @@ window.addEventListener('scroll', () => {
         loadNextPosts();
     }
 });
+
+function setupLikeEvent(likeButton, profilData) {
+  const postId = likeButton.getAttribute('post-id');
+  console.log('Post ID:', postId);
+
+  const nickname = profilData.response.nickname; 
+
+  socket.emit('user', { nickname });
+  console.log('nickname:', nickname);
+
+  socket.once('reponseuser', function (userdata) {
+    console.log('User data:', userdata);
+
+    const user_id = userdata.response._id;
+    console.log(user_id)
+    socket.emit('doILike', { user_id, token, post_id: postId });
+
+    socket.once('reponsedoILike', function (LikeData) {
+      console.log('Like data:', LikeData);
+
+      const isLiked = LikeData && LikeData.response ? LikeData.response.liked : false;
+      console.log('Is liked:', isLiked);
+
+      if(isLiked){
+         likeButton.src = 'includes/likeOK.png'; 
+      }
+      else
+      {
+         likeButton.src = 'includes/like.png'; 
+      }
+    });
+  });
+
+  likeButton.addEventListener('click', function () {
+    const postId = likeButton.getAttribute('post-id');
+    console.log('Post ID:', postId);
+
+    const nickname = profilData.response.nickname; 
+
+    socket.emit('user', { nickname });
+    console.log('nickname:', nickname);
+
+    socket.once('reponseuser', function (userdata) {
+      console.log('User data:', userdata);
+
+      const user_id = userdata.response._id;
+      console.log(user_id)
+      socket.emit('doILike', { user_id, token, post_id: postId });
+
+      socket.once('reponsedoILike', function (LikeData) {
+        console.log('Like data:', LikeData);
+
+        const isLiked = LikeData && LikeData.response ? LikeData.response.liked : false;
+        console.log('Is liked:', isLiked);
+
+        toggleLike(isLiked, user_id, postId, likeButton);
+      });
+    });
+  });
+}
+
+
+function toggleLike(isLiked, user_id, postId, likeButton) {
+  console.log(likeButton);
+
+  if (isLiked) {
+    socket.emit('dislike', { user_id, token, post_id: postId });
+    console.log("dislike");
+    likeButton.src = 'includes/like.png'; 
+  } else {
+    socket.emit('like', { user_id, token, post_id: postId });
+    console.log("like");
+    likeButton.src = 'includes/likeOK.png'; 
+  }
+}
