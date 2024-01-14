@@ -17,6 +17,8 @@
   </div>
 
   <div id="main-content">
+    <div id="container">
+    </div>
     <div id="messages-container"></div>
     <div id="input-container">
       <input type="text" id="message-input" placeholder="Ecris un message...">

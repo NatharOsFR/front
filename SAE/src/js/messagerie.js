@@ -1,4 +1,4 @@
-  let currentRoom = 'general'; // Définir le salon par défaut
+let currentRoom = 'general'; // Définir le salon par défaut
 let messagesContainer; 
 let messageInput;
 let roomButtons;
@@ -103,8 +103,6 @@ async function loadFollowers() {
       createPrivateButton(user.nickname, privateRoomId);
     });
 
-    // Si tous les utilisateurs suivis ont été chargés, masquer le bouton de chargement
-     console.log(totalFollowers);
     if (loadedFollowers >= totalFollowers) {
       const loadMoreButton = document.getElementById('load-more-button');
       if (loadMoreButton) {
@@ -225,7 +223,6 @@ function addMessage(message, nickname, picture) {
 }
 async function fetchData(message) {
   try {
-    console.log(message.userId);
 
     // Ajouter le message à la file d'attente
     messageQueue.push(message);
@@ -275,7 +272,6 @@ function MessageriePrivee(user_id){
             lastDate = message.creation;
             isFirstIteration = false;
           }
-          console.log(message);
           messageQueue.push(message);
         });
         processQueue();
@@ -284,7 +280,6 @@ function MessageriePrivee(user_id){
     }else if (donnees.statusCode == 400) {
       socket.emit('createConv', { users_id: [user_id], token });
       socket.once('reponsecreateConv', (donnees) => {
-        console.log(donnees);
       })
       console.log("conv créée");
     }
@@ -316,12 +311,14 @@ function changeRoom(room) {
         const privateRoomId = createPrivateRoom(privateUsers);
       
         MessageriePrivee(user2);
+
+        const container = document.getElementById('container');
+
         
-  
-        const referenceElement = messagesContainer.firstchild;
+        const referenceElement = container.firstchild;
 
         // Insérez le bouton Reload avant la référence
-        messagesContainer.insertBefore(reloadButton, referenceElement);
+        container.insertBefore(reloadButton, referenceElement);
       
         // Rejoindre le salon privé
         socket.emit('joinPrivateRoom', { roomId: privateRoomId });
@@ -392,7 +389,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       socket.once('reponseexistConv', (donnees) => {
         socket.emit('getMessage',{token,conv_id: donnees.response[0]._id,message_date :lastDate});
-        console.log(lastDate);
         socket.once('reponsegetMessage', (donnees) => {
           donnees.response.forEach(message => {
             if (isFirstIteration) {
