@@ -390,7 +390,8 @@ document.addEventListener('DOMContentLoaded', () => {
       socket.once('reponseexistConv', (donnees) => {
         socket.emit('getMessage',{token,conv_id: donnees.response[0]._id,message_date :lastDate});
         socket.once('reponsegetMessage', (donnees) => {
-          donnees.response.forEach(message => {
+          const variable = donnees.response.slice().reverse();
+            variable.forEach(message => {
             if (isFirstIteration) {
               lastDate = message.creation;
               isFirstIteration = false;
