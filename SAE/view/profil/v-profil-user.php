@@ -16,6 +16,7 @@
                       <div class="profile-info">
                           <h2 id="profile-username"></h2>
                           <p id="profile-age">25 ans</p>
+                          <img id="profile-img" style="width: 10%; height: 10%;" ></img>
                       </div>
                       <div class="bio">
                           <p class="bio-label">Biographie:</p>

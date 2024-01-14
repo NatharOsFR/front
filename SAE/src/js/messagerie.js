@@ -2,10 +2,14 @@
 let messagesContainer; 
 let messageInput;
 let roomButtons;
+let reloadButton;
 let Id;
 let nickname;
 let picture;
+let lastDate;
+let isFirstIteration = true;
 let loadedFollowers;
+const messageQueue = [];
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -16,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sendMessage();
         }
     });
+      
 });
 
 async function loadDataProfil() {
@@ -47,6 +52,29 @@ async function loadDataProfil() {
   } catch (error) {
     console.error('Erreur lors de la récupération des données de profil:', error);
     // Gérer les erreurs ici
+  }
+}
+async function loadDataByID(user_id) {
+  try {
+    const profileResponse = await new Promise((resolve, reject) => {
+      socket.emit('getProfileDataById', { token, user_id: user_id });
+
+      socket.once('reponsegetProfileDataById', (response) => {
+        resolve(response);
+      });
+
+      socket.once('error', (error) => {
+        reject(error);
+      });
+    });
+
+    const nickname = profileResponse.response.nickname;
+    const picture = profileResponse.response.picture;
+    const data = [nickname, picture];
+    return data;
+
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données de profil:', error);
   }
 }
 async function loadFollowers() {
@@ -114,13 +142,21 @@ async function sendMessage() {
         if (message !== '') {
             // Vérifier si c'est une messagerie privée
             if (currentRoom.startsWith('private_')) {
-                const privateUsers = currentRoom.split('_').slice(1); // Récupérer les utilisateurs dans le salon privé
+                const listeUser = currentRoom.split('_'); // Récupérer les utilisateurs dans le salon privé
+                const privateUsers = listeUser; 
+                const user2 = listeUser[2];
+
                 socket.emit('privateChatMessage', { message, room: currentRoom, nickname : nickname, picture: picture, userId: Id, privateUsers });
+                socket.emit('existConv', {token, user_id: user2});  
+
+                // Écouter la réponse du serveur
+                socket.once('reponseexistConv', (donnees) => {
+                socket.emit('sendConv',{conv_id: donnees.response[0]._id,message,picture : "",token});
+              });
             } else {
                 // Ce n'est pas une messagerie privée, envoyer normalement
                 socket.emit('chatMessage', { message, room: currentRoom, nickname : nickname,picture: picture , userId: Id });
             }
-
             messageInput.value = '';
         }
     } catch (error) {
@@ -128,6 +164,38 @@ async function sendMessage() {
         // Gérer les erreurs ici
     }
 }
+
+function addMessageBefore(message, nickname, picture) {
+    const messageElement = document.createElement('div');
+
+    const image = document.createElement('img');
+    image.src = picture || "includes/plus.png";
+    image.alt = 'Image de profil';
+
+    image.style.width = '5%';
+    image.style.height = '5%';
+    image.style.borderRadius = '50%';
+
+    messageElement.appendChild(image);
+
+    const capitalizedNickname = (nickname && /^[a-zA-Z]/.test(nickname))
+        ? nickname.charAt(0).toUpperCase() + nickname.slice(1)
+        : nickname;
+
+    const messageTextElement = document.createElement('span');
+    messageTextElement.textContent = `${capitalizedNickname}: ${message}`;
+
+    messageElement.appendChild(messageTextElement);
+
+    // Obtenez une référence au premier enfant de messagesContainer
+    const firstChild = messagesContainer.firstChild;
+
+    // Insérez le messageElement avant le premier enfant
+    messagesContainer.insertBefore(messageElement, firstChild);
+
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
 
 function addMessage(message, nickname, picture) {
     const messageElement = document.createElement('div');
@@ -155,10 +223,79 @@ function addMessage(message, nickname, picture) {
 
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
+async function fetchData(message) {
+  try {
+    console.log(message.userId);
+
+    // Ajouter le message à la file d'attente
+    messageQueue.push(message);
+
+    // Démarrer le traitement de la file d'attente
+    processQueue();
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données de profil:', error);
+  }
+}
+
+async function processQueue() {
+  // Traiter la file d'attente uniquement si elle n'est pas vide
+  if (messageQueue.length > 0) {
+    const message = messageQueue.shift(); // Retirer le premier message de la file d'attente
+    const data = await loadDataByID(message.userId);
+    addMessage(message.message, data[0], data[1]);
+    // Appeler récursivement pour traiter le prochain message dans la file d'attente
+    processQueue();
+  }
+}
+async function processQueuebefore() {
+  // Traiter la file d'attente uniquement si elle n'est pas vide
+  if (messageQueue.length > 0) {
+    const message = messageQueue.shift(); // Retirer le premier message de la file d'attente
+    const data = await loadDataByID(message.userId);
+    addMessageBefore(message.message, data[0], data[1]);
+    // Appeler récursivement pour traiter le prochain message dans la file d'attente
+    processQueuebefore();
+  }
+}
+
+function MessageriePrivee(user_id){
+  // Émettre un événement pour demander la conv existe déja 
+  socket.emit('existConv', {token, user_id: user_id });
+
+  // Écouter la réponse du serveur
+  socket.once('reponseexistConv', (donnees) => {
+    // Les données sont disponibles dans la variable 'donnees'
+    if (donnees.statusCode == 500) {
+      return 0;
+    } else if(donnees.statusCode == 200){
+      socket.emit('getMessage', {token,conv_id: donnees.response[0]._id,message_date :""});
+      socket.once('reponsegetMessage', (donnees) => {
+        donnees.response.forEach(message => {
+          if (isFirstIteration) {
+            lastDate = message.creation;
+            isFirstIteration = false;
+          }
+          console.log(message);
+          messageQueue.push(message);
+        });
+        processQueue();
+
+      });
+    }else if (donnees.statusCode == 400) {
+      socket.emit('createConv', { users_id: [user_id], token });
+      socket.once('reponsecreateConv', (donnees) => {
+        console.log(donnees);
+      })
+      console.log("conv créée");
+    }
+  });
+  return 3;
+}
 
 function changeRoom(room) {
     currentRoom = room;
 
+    messagesContainer.innerHTML = ''; // Effacer les messages en changeant de salon
     // Désactiver tous les boutons
     const allButtons = roomButtons.querySelectorAll('button');
     allButtons.forEach(button => {
@@ -174,22 +311,44 @@ function changeRoom(room) {
     // Vérifier si c'est une messagerie privée
     if (room.startsWith('private_')) {
         const privateUsers = room.split('_').slice(1); // Récupérer les utilisateurs dans le salon privé
-
+        const user2 = privateUsers[1];
         // Créer le salon privé (s'il n'existe pas déjà)
         const privateRoomId = createPrivateRoom(privateUsers);
+      
+        MessageriePrivee(user2);
+        
+  
+        const referenceElement = messagesContainer.firstchild;
 
+        // Insérez le bouton Reload avant la référence
+        messagesContainer.insertBefore(reloadButton, referenceElement);
+      
         // Rejoindre le salon privé
         socket.emit('joinPrivateRoom', { roomId: privateRoomId });
+
+        
     }
 
-    messagesContainer.innerHTML = ''; // Effacer les messages en changeant de salon
+    
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     messagesContainer = document.getElementById('messages-container');
     messageInput = document.getElementById('message-input');
     roomButtons = document.getElementById('room-buttons');
+    reloadButton = document.createElement('button');
+    reloadButton.textContent = 'Reload';
+
+    // Ajoutez des styles au bouton
+    reloadButton.style.padding = '10px 20px';
+    reloadButton.style.fontSize = '16px';
+    reloadButton.style.backgroundColor = '#4CAF50';  // Couleur de fond verte
+    reloadButton.style.color = 'white';             // Couleur du texte blanche
+    reloadButton.style.border = 'none';
+    reloadButton.style.borderRadius = '5px';
+    reloadButton.style.cursor = 'pointer';
     loadDataProfil();
+    
 
     // Écouter les messages entrants
     socket.on('chatMessage', (data) => {
@@ -223,6 +382,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target.tagName === 'BUTTON') {
             changeRoom(event.target.dataset.room);
         }
+    });
+    
+    reloadButton.addEventListener('click', function() {
+      const listeUser = currentRoom.split('_'); // Récupérer les utilisateurs dans le salon privé
+      const user2 = listeUser[2];
+      console.log("reload");
+      socket.emit('existConv', {token, user_id: user2});  
+
+      socket.once('reponseexistConv', (donnees) => {
+        socket.emit('getMessage',{token,conv_id: donnees.response[0]._id,message_date :lastDate});
+        console.log(lastDate);
+        socket.once('reponsegetMessage', (donnees) => {
+          donnees.response.forEach(message => {
+            if (isFirstIteration) {
+              lastDate = message.creation;
+              isFirstIteration = false;
+            }
+            messageQueue.push(message);
+          });
+          processQueuebefore();
+          
+  
+        });
+      });
+      isFirstIteration = true;
     });
 
     // Ajouter un écouteur de clic pour le bouton de chargement

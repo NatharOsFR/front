@@ -1,7 +1,7 @@
 ////Affichage Profil 
 
 
-
+console.log(token)
 document.addEventListener('DOMContentLoaded', () => {
   // Get the token from the cookie
 
@@ -26,15 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
 function updateProfileData(profileData) {
   const usernameElement = document.getElementById('profile-username');
   const rank = profileData.response.rank;
-  const imgElement = document.getElementById('profile-img'); // Assurez-vous d'avoir un élément avec l'id 'profile-img'
+  const imgElement = document.getElementById('profile-img');
 
   switch (rank) {
     case 1:
-        imgElement.src = "includes/Rang1.png";
+      imgElement.src = "includes/Rang1.png";
       break;
 
     case 2:
-        imgElement.src = "includes/Rang2.png";
+      imgElement.src = "includes/Rang2.png";
       break;
 
     case 3:
@@ -46,16 +46,15 @@ function updateProfileData(profileData) {
       break;
       
     case 5:
-        imgElement.src = "includes/Rang5.png";
+      imgElement.src = "includes/Rang5.png";
       break;
       
     case 6:
-      imgElement.src = "includes/Rang6.png";
+      imgElement.src = 'includes/Rang6.png';
       break;
       
     default:
       usernameElement.textContent = "Rang inconnu";
-      
       break;
   }
 

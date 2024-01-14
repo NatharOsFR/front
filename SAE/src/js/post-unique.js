@@ -215,6 +215,7 @@ function generateCommentBar(postId) {
         if (commentText.trim() !== '') {
             sendComment(postId, commentText);
             commentInput.value = '';
+            location.reload();
         }
     });
     commentBar.appendChild(sendButton);
