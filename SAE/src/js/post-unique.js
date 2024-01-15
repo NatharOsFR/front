@@ -35,10 +35,11 @@ function generateCard(postData,creatorInfo) {
     image.src = postData.picture || 'includes/Test.png';
     image.className = 'imgMain';
     card.appendChild(image);
-      const description = document.createElement('p');
-      description.className = 'description';
-      description.textContent = postData.description;
-      leftSide.appendChild(description);
+  
+    const description = document.createElement('p');
+    description.className = 'description';
+    description.textContent = postData.description;
+    leftSide.appendChild(description);
   
       const user = document.createElement('h3');
       user.className = 'user';
@@ -54,22 +55,59 @@ function generateCard(postData,creatorInfo) {
           user.innerHTML = `<div class="titre"><img src="${creatorInfo.picture || "includes/humain.png"}" class="imgHumain"> ${creatorInfo.nickname}</div>`;
       }
 
+  socket.emit('getProfileData', { token });
+
+  // Créer un élément d'ancrage pour le nom d'utilisateur
+  const usernameLink = document.createElement('a');
+
+  // Attendre la réponse de l'événement 'reponsegetProfileData'
+  socket.once('reponsegetProfileData', (data) => {
+
+      // Vérifier si le nom d'utilisateur est différent
+       if (data.response.nickname!==creatorInfo.nickname)  {
+          usernameLink.href = `/?url=user/${creatorInfo.nickname}`;
+      } else {
+          usernameLink.href = `/?url=profil`;
+      }
+  });
+
+  user.addEventListener('click', function() {
+      window.location.href = `${usernameLink.href}`;
+  });
+
       leftSide.appendChild(user);
 
   
-
   if (postData.buy) {
     getUserInfoById(postData.ownerId, (ownerData) => {
         
         const ownerInfo = document.createElement('div');
         ownerInfo.className = 'owner-info';
 
+      socket.emit('getProfileData', { token });
+
+      // Créer un élément d'ancrage pour le nom d'utilisateur
+      const usernameLink = document.createElement('a');
+
+      // Attendre la réponse de l'événement 'reponsegetProfileData'
+      socket.once('reponsegetProfileData', (data) => {
+
+          // Vérifier si le nom d'utilisateur est différent
+           if (data.response.nickname!==ownerData.nickname)  {
+              usernameLink.href = `/?url=user/${ownerData.nickname}`;
+          } else {
+              usernameLink.href = `/?url=profil`;
+          }
+        
+      
         // Vérifiez de nouveau le nickname pour mettre la première lettre en majuscule si nécessaire
         if (ownerData.nickname && /^[a-zA-Z]/.test(ownerData.nickname)) {
             const capitalizedNickname = ownerData.nickname.charAt(0).toUpperCase() + ownerData.nickname.slice(1);
 
             ownerInfo.innerHTML = `
-                <h5 class="titreInfoPost" ><img src="${ownerData.picture || "includes/dl.png"}" class="imgHumain"> ${capitalizedNickname}</h5>
+             <a href="${usernameLink.href}" class="titreInfoPost">
+                <h5 id="ownerTitle" class="titreInfoPost" ><img src="${ownerData.picture || "includes/dl.png"}" class="imgHumain"> ${capitalizedNickname}</h5>
+              </a>
                 <div class="containerPostPrix">
                     <img src="includes/MatriceCoin.png" class="imgPostMoney">
                     <span class="textPrixPost">${postData.price}</span>
@@ -78,15 +116,17 @@ function generateCard(postData,creatorInfo) {
             `;
         } else {
             ownerInfo.innerHTML = `
-                <h5 class="titreInfoPost" ><img src="${ownerData.picture || "includes/dl.png"}" class="imgHumain">${ownerData.nickname}</h5>
-                <div class="containerPostPrix">
+            <a href="${usernameLink.href}">
+                <h5 id="ownerTitle" class="titreInfoPost" ><img src="${ownerData.picture || "includes/dl.png"}" class="imgHumain">${ownerData.nickname}</h5>
+              </a>
+              <div class="containerPostPrix">
                     <img src="includes/MatriceCoin.png" class="imgPostMoney">
                     <span class="textPrixPost">${postData.price}</span>
                     <img id="imgBuy" src="includes/buy.png" class="imgBuy">
                 </div>
             `;
         }
-
+      
           const buyButton = ownerInfo.querySelector('#imgBuy');
           const buyConfirmationDialog = document.getElementById('buyConfirmationDialog');
           const confirmBuyButton = document.getElementById('confirmBuy');
@@ -125,6 +165,7 @@ function generateCard(postData,creatorInfo) {
           rightSide.appendChild(ownerInfo);
           rightSide.appendChild(actionButtons);
       });
+      });
   }
 
     const actionButtons = document.createElement('div');
@@ -162,7 +203,6 @@ function generateCard(postData,creatorInfo) {
     partage.addEventListener('click', function() {
 
       urlActuelle = window.location.href;
-
 
         const tempTextarea = document.createElement('textarea');
         tempTextarea.value = urlActuelle;

@@ -77,6 +77,7 @@ async function loadDataByID(user_id) {
     console.error('Erreur lors de la récupération des données de profil:', error);
   }
 }
+
 async function loadFollowers() {
   try {
     const followersResponse = await new Promise((resolve, reject) => {
@@ -103,11 +104,9 @@ async function loadFollowers() {
       createPrivateButton(user.nickname, privateRoomId);
     });
 
+    // Si tous les utilisateurs suivis ont été chargés, masquer le bouton de chargement
     if (loadedFollowers >= totalFollowers) {
-      const loadMoreButton = document.getElementById('load-more-button');
-      if (loadMoreButton) {
-          loadMoreButton.style.display = 'none';
-      }
+      // Ajoutez ici le code pour masquer le bouton de chargement
     }
   } catch (error) {
     console.error('Erreur lors du chargement des utilisateurs suivis:', error);
@@ -165,20 +164,19 @@ async function sendMessage() {
 
 function addMessageBefore(message, nickname, picture) {
     const messageElement = document.createElement('div');
-
-    messsageElement.style.marginbottom = '10px';
+    messageElement.style.marginBottom = '10px';
   
     const image = document.createElement('img');
     image.src = picture || "includes/plus.png";
     image.alt = 'Image de profil';
     
-    image.style.maxwidth = '50px';
-    image.maxheight = '50px';
-    image.style.minwidth = '50px';
-    image.style.minheight = '50px';
-    image.style.borderradius = '50%';
-    image.style.marginright = '2%';
-    image.style.objectfit = 'cover';
+    image.style.maxWidth = '50px';
+    image.style.maxHeight = '50px';
+    image.style.minWidth = '50px';
+    image.style.minHeight = '50px';
+    image.style.borderRadius = '50%';
+    image.style.marginRight = '2%';
+    image.style.objectFit = 'cover';
 
     messageElement.appendChild(image);
 
@@ -203,19 +201,19 @@ function addMessageBefore(message, nickname, picture) {
 
 function addMessage(message, nickname, picture) {
     const messageElement = document.createElement('div');
-    messsageElement.style.marginbottom = '10px';
+    messageElement.style.marginBottom = '10px';
   
     const image = document.createElement('img');
     image.src = picture || "includes/plus.png";
     image.alt = 'Image de profil';
   
-    image.style.maxwidth = '50px';
-    image.maxheight = '50px';
-    image.style.minwidth = '50px';
-    image.style.minheight = '50px';
-    image.style.borderradius = '50%';
-    image.style.marginright = '2%';
-    image.style.objectfit = 'cover';
+    image.style.maxWidth = '50px';
+    image.style.maxHeight = '50px';
+    image.style.minWidth = '50px';
+    image.style.minHeight = '50px';
+    image.style.borderRadius = '50%';
+    image.style.marginRight = '2%';
+    image.style.objectFit = 'cover';
 
     messageElement.appendChild(image);
 
@@ -224,7 +222,7 @@ function addMessage(message, nickname, picture) {
         : nickname;
 
     const messageTextElement = document.createElement('span');
-    messageTextElement.textContent = `${capitalizedNickname}: ${message}`;
+    messageTextElement.textContent = `${capitalizedNickname} : ${message}`;
 
     messageElement.appendChild(messageTextElement);
 

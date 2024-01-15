@@ -16,7 +16,7 @@
                       <div class="profile-info">
                           <h2 id="profile-username"></h2>
                           <p id="profile-age">25 ans</p>
-                          <img id="profile-img" style="width: 10%; height: 10%;" ></img>
+                          <img id="profile-img" style="width: 20%; height: 20%;" ></img>
                       </div>
                       <div class="bio">
                           <p class="bio-label">Biographie:</p>
@@ -46,6 +46,14 @@
 
       <button class="fixed-button"><a class="nav-link lienPost <?php if($menu['page'] == "creationPost") echo "active" ?>" aria-current="page" href="?url=creationPost">+ Nouveau post</a></button>
   </div>
+
+    <div id="buyConfirmationDialog" class="confirmation-dialog">
+    <div class="dialog-content">
+        <p>Voulez-vous vraiment acheter ce post ?</p>
+        <button id="confirmBuy">Valider</button>
+        <button id="cancelBuy">Annuler</button>
+      </div>
+    </div>
   <script src="/src/js/script-subscribe.js" defer></script> 
   <script src="/src/js/script-post-user.js" defer></script>
 

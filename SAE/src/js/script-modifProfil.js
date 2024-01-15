@@ -1,7 +1,6 @@
 ////Affichage Profil 
 
 
-console.log(token)
 document.addEventListener('DOMContentLoaded', () => {
   // Get the token from the cookie
 
@@ -13,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Listen for the response event
     socket.on('reponsegetProfileData', (profileData) => {
-      console.log(profileData);
       // Update the profile information on the page
       updateProfileData(profileData);
     });
@@ -176,7 +174,6 @@ async function createPost(formData) {
 
     const imgurLink = await response.text();
 
-    console.log('Imgur Link:', imgurLink);
 
     return imgurLink;
   } catch (error) {
@@ -249,15 +246,12 @@ async function saveAndEnable() {
 
     // Émettre l'événement 'updateProfil' vers le serveur
     socket.emit('updateProfil', data);
-    console.log(data);
 
     // Écouter l'événement 'reponseAPI' une seule fois
     socket.once('reponseupdateProfil', (response) => {
-      console.log('Réponse du serveur (modifyProfile):', response);
 
       // Vérifier le code de retour
       if (response.statusCode === 200) {
-        console.log('Le profil a été modifié avec succès.');
 
         // Afficher un message de succès à l'utilisateur
         alert('Profil modifié avec succès !');

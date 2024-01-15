@@ -72,32 +72,81 @@ function generateCard(postData,ownerdata,creatorInfo) {
   image.className = 'imgMain';
   card.appendChild(image);
 
+  image.addEventListener('click', () => {
+    // Redirige vers le lien /post/idpost
+    window.location.href = `/?url=post/${postData._id}`;
+  });
   const description = document.createElement('p');
   description.className = 'description';
   description.textContent = postData.description;
   leftSide.appendChild(description);
   // Utilise la fonction getUserInfoById pour obtenir le nom d'utilisateur et la photo de profil
 
-    const user = document.createElement('h3');
-    user.className = 'user';
-    user.innerHTML = `<div class="titre"><img src="${creatorInfo.picture||"includes/humain.png"}" class="imgHumain"> ${creatorInfo.nickname}</div>`;
+  const user = document.createElement('a');
+  user.className = 'user';
+  user.style.color = "black";  
+  user.style.textDecoration = "none"; 
+  const h3 = document.createElement('h3');
+  h3.innerHTML = `<div class="titre"><img src="${creatorInfo.picture || "includes/humain.png"}"   class="imgHumain"> ${creatorInfo.nickname}</div>`;
+  user.appendChild(h3);
+
+  socket.emit('getProfileData', { token });
+
+  // Créer un élément d'ancrage pour le nom d'utilisateur
+  const usernameLink = document.createElement('a');
+
+  // Attendre la réponse de l'événement 'reponsegetProfileData'
+  socket.once('reponsegetProfileData', (data) => {
+
+      // Vérifier si le nom d'utilisateur est différent
+       if (data.response.nickname!==creatorInfo.nickname)  {
+          usernameLink.href = `/?url=user/${creatorInfo.nickname}`;
+      } else {
+          usernameLink.href = `/?url=profil`;
+      }
+  });
+
+  user.addEventListener('click', function() {
+      window.location.href = `${usernameLink.href}`;
+  });
     leftSide.appendChild(user);
   // Ajoute la partie seulement si postData.buy est true
   if (postData.buy) {
 
-      const ownerInfo = document.createElement('div');
-      ownerInfo.className = 'owner-info';
+    const ownerInfo = document.createElement('div');
+    ownerInfo.className = 'owner-info';
+
+    socket.emit('getProfileData', { token });
+
+    // Créer un élément d'ancrage pour le nom d'utilisateur
+    const usernameLink = document.createElement('a');
+
+    // Attendre la réponse de l'événement 'reponsegetProfileData'
+    socket.once('reponsegetProfileData', (data) => {
+
+        // Vérifier si le nom d'utilisateur est différent
+         if (data.response.nickname!==ownerdata.nickname)  {
+            usernameLink.href = `/?url=user/${ownerdata.nickname}`;
+        } else {
+            usernameLink.href = `/?url=profil`;
+        }
+
       ownerInfo.innerHTML = `
+         <a href="${usernameLink.href}" class="titreInfoPost">
         <h5 class="titreInfoPost" ><img src="${ownerdata.picture||"includes/dl.png"}" class="imgHumain"> ${ownerdata.nickname}</h5>
+        </a>
         <div class="containerPostPrix">
           <img src="includes/MatriceCoin.png" class="imgPostMoney">
           <span class="textPrixPost">${postData.price}</span>
           <img src="includes/buy.png" class="imgBuy">
         </div>
       `;
-      rightSide.appendChild(ownerInfo);
+    
 
+  });
+    rightSide.appendChild(ownerInfo);
   }
+  
 
   const actionButtons = document.createElement('div');
   actionButtons.className = 'actionButtons';
@@ -118,7 +167,7 @@ function generateCard(postData,ownerdata,creatorInfo) {
   socket.once('reponsegetProfileData', (profilData) => {
   setupLikeEvent(like, profilData);
   })
-  
+
   actionButtons.appendChild(like);
 
 
@@ -135,7 +184,7 @@ function generateCard(postData,ownerdata,creatorInfo) {
   rightSide.appendChild(actionButtons);
   Infos.appendChild(leftSide);
   Infos.appendChild(rightSide);
-  
+
   card.appendChild(Infos);
 
   // Ajoute un gestionnaire d'événements "click" à la carte
@@ -161,7 +210,7 @@ function generateCard(postData,ownerdata,creatorInfo) {
 
       alert('L\'URL a été copiée dans le presse-papiers.');
   });
-  
+
   return card;
 }
 
@@ -286,7 +335,7 @@ function setupLikeEvent(likeButton, profilData) {
       }
     });
   });
-  
+
   likeButton.addEventListener('click', function () {
     const postId = likeButton.getAttribute('post-id');
     console.log('Post ID:', postId);
@@ -318,7 +367,7 @@ function setupLikeEvent(likeButton, profilData) {
 
 function toggleLike(isLiked, user_id, postId, likeButton) {
   console.log(likeButton);
- 
+
   if (isLiked) {
     socket.emit('dislike', { user_id, token, post_id: postId });
     console.log("dislike");
