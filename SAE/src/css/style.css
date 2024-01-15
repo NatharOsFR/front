@@ -65,10 +65,12 @@ body {
 
 
 .user-image {
-    width: 50px; /* Ajustez la taille de l'image selon vos besoins */
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px; /* Ajoute de l'espace entre l'image et le texte */
+  max-width: 50px;
+  max-height: 50px;
+  min-width: 50px;
+  min-height: 50px;
+  border-radius: 50%;
+  object-fit : cover;
 }
 
 .content-container {
@@ -198,12 +200,13 @@ body {
     gap: 10px;
   }
   .card .imgHumain {
-    width: 50px;
+    max-width: 50px;
+    max-height: 50px;
     min-width: 50px;
-    height: 50px;
-    min-height:50px;
+    min-height: 50px;
     border-radius: 50%;
     margin-right: 5%;
+    object-fit : cover;
   }
   .card .titreInfoPost{
     display: flex;
@@ -900,9 +903,14 @@ input:checked + .slider:before {
 }
 
 .profile-image {
-    width: 20%;
-    border-radius: 50%;
-    margin: 4%;
+  max-width: 13rem;
+  max-height: 13rem;
+  min-width: 13rem;
+  min-height: 13rem;
+  border-radius: 50%;
+  margin-right: 5%;
+  object-fit : cover;
+  margin : 4%;
 }
 
 .profile-info {
@@ -1030,11 +1038,14 @@ input:checked + .slider:before {
 
 .compte-container {
   margin: 2%;
-  width: 50%;
+  width: auto;
   border-radius: 50px;
   background-color: #fff;
   border: 1px solid #ddd;
-  padding: 20px;
+  padding-left: 75px;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  padding-right: 75px;
   background-image: linear-gradient(to bottom, #C7E6F0 0%, #ffffff 50%, #C7E6F0 100%);
 }
 
@@ -1064,8 +1075,13 @@ input:checked + .slider:before {
   gap: 15px;
 }
 .compte-image {
-    width: 25%;
-    border-radius: 50%;
+  max-width: 13rem;
+  max-height: 13rem;
+  min-width: 13rem;
+  min-height: 13rem;
+  border-radius: 50%;
+  margin-right: 5%;
+  object-fit: cover;
 }
 
 .edit-motdepasse-button {
@@ -1195,6 +1211,7 @@ input:checked + .slider:before {
   margin-left: auto; 
   display: flex;
   flex-direction: row-reverse;
+  align-items: center;
   margin-top: 5%;
    margin-bottom: 5%;
   width: 10%;

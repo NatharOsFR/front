@@ -17,7 +17,6 @@
                           <p id="profile-age">25 ans</p>
                           <img id="profile-img" style="width: 10%; height: 10%;"></img>
                       </div>
-                      </div>
                       <div class="bio">
                           <p class="bio-label">Biographie:</p>
                           <p id="profile-bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -36,7 +35,6 @@
                           <button type="button" class="edit-profile-button" id="edit-profile">Modifier le profil</button>
                       </div>
                   </div>
-              </div>
           </form>
       </div>
   </div>

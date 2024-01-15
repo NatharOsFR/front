@@ -463,6 +463,7 @@ function setupLikeEvent(likeButton, profilData) {
         console.log('Is liked:', isLiked);
 
         toggleLike(isLiked, user_id, postId, likeButton);
+        location.reload();
       });
     });
   });

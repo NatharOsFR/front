@@ -166,13 +166,19 @@ async function sendMessage() {
 function addMessageBefore(message, nickname, picture) {
     const messageElement = document.createElement('div');
 
+    messsageElement.style.marginbottom = '10px';
+  
     const image = document.createElement('img');
     image.src = picture || "includes/plus.png";
     image.alt = 'Image de profil';
-
-    image.style.width = '5%';
-    image.style.height = '5%';
-    image.style.borderRadius = '50%';
+    
+    image.style.maxwidth = '50px';
+    image.maxheight = '50px';
+    image.style.minwidth = '50px';
+    image.style.minheight = '50px';
+    image.style.borderradius = '50%';
+    image.style.marginright = '2%';
+    image.style.objectfit = 'cover';
 
     messageElement.appendChild(image);
 
@@ -197,14 +203,19 @@ function addMessageBefore(message, nickname, picture) {
 
 function addMessage(message, nickname, picture) {
     const messageElement = document.createElement('div');
-
+    messsageElement.style.marginbottom = '10px';
+  
     const image = document.createElement('img');
     image.src = picture || "includes/plus.png";
     image.alt = 'Image de profil';
   
-    image.style.width = '5%';
-    image.style.height = '5%';
-    image.style.borderRadius = '50%';
+    image.style.maxwidth = '50px';
+    image.maxheight = '50px';
+    image.style.minwidth = '50px';
+    image.style.minheight = '50px';
+    image.style.borderradius = '50%';
+    image.style.marginright = '2%';
+    image.style.objectfit = 'cover';
 
     messageElement.appendChild(image);
 
