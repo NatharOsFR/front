@@ -336,7 +336,31 @@ function createCommentElement(comment) {
 
         getUserInfoById(comment.creatorId, (creatorInfo) => {
             userImage.src = creatorInfo.picture || 'includes/default-profile-picture.jpg';
+          
+            // Émettre un événement 'getProfileData' avec le jeton comme données
+            socket.emit('getProfileData', { token });
 
+            // Créer un élément d'ancrage pour le nom d'utilisateur
+            const usernameLink = document.createElement('a');
+
+            // Attendre la réponse de l'événement 'reponsegetProfileData'
+            socket.once('reponsegetProfileData', (data) => {
+
+                // Vérifier si le nom d'utilisateur est différent
+                if (data.response.nickname !== creatorInfo.nickname) {
+                    // Si différent, lier vers le profil de l'utilisateur
+                    usernameLink.href = `/?url=user/${creatorInfo.nickname}`;
+                } else {
+                    // Sinon, lier vers la page de profil générique
+                    usernameLink.href = `/?url=profil`;
+                }
+            });
+
+            // Ajouter un écouteur d'événement 'click' sur l'élément creatorInfo
+            userNickname.addEventListener('click', function () {
+                // Rediriger vers l'URL déterminée par la réponse de 'reponsegetProfileData'
+                window.location.href = `${usernameLink.href}`;
+            });
             if (creatorInfo.nickname && /^[a-zA-Z]/.test(creatorInfo.nickname)) {
                 const capitalizedNickname = creatorInfo.nickname.charAt(0).toUpperCase() + creatorInfo.nickname.slice(1);
                 userNickname.textContent = capitalizedNickname + " : ";
