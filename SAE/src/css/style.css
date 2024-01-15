@@ -884,7 +884,7 @@ input:checked + .slider:before {
   min-width: 50px;
   min-height: 50px;
   border-radius: 50%;
-  margin-right: 5%;
+  margin-right: 10%;
   object-fit : cover;
 }
 
